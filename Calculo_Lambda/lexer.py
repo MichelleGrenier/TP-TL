@@ -21,23 +21,49 @@ muestra aquí abajo.
 """
 
 tokens = (
-    'NUMBER',
-    'PLUS',
-    'TIMES',
-    'MINUS',
+    'TWOPOINTS',
+    'VARIABLE',
+    'TRUE',
+    'FALSE',
+    'ZERO',
+    'LAMBDA',
+    'IF',
+    'THEN',
+    'ELSE',
+    'XTYPE',
+    'T',
+    'POINT',
+    'SUCC',
+    'OPENPAREN',
+    'CLOSEPAREN',
+    'PRED',
+    'ISZERO',
+    'BOOL',
+    'NAT',
+    'ARROW',
 )
 
-t_PLUS = r'\+'
-t_TIMES = r'\*'
-t_MINUS = r'\-'
-t_ignore = ' \t'
+t_VARIABLE = r'\d'
+t_TRUE = r'true'
+t_FALSE = r'false'
+t_IF = r'if'
+t_ELSE = r'else'
+t_THEN = r'then'
+t_ignore = ' '
+t_TWOPOINTS = r':'
+t_LAMBDA = r'/'
+t_SUCC = r'succ'
+t_OPENPAREN = r'\('
+t_CLOSEPAREN = r'\)'
+# t_POINT = r'\.'
+# t_PRED = r'pred'
+# t_ISZERO = r'iszero'
+# t_ARROW = r'\->'
 
-
-def t_NUMBER(t):
-    r'\d+'
+def t_ZERO(t):
+    r'\d'
     t.value = int(t.value)
     return t
-
 
 # Build the lexer
 lexer = lex.lex()
@@ -47,3 +73,4 @@ def apply_lexer(string):
     lexer.input(string)
 
     return list(lexer)
+

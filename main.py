@@ -6,4 +6,4 @@ while True:
         exp_str = raw_input('calc> ')
     except EOFError:
         break
-    print(parse(exp_str))
+    print(parse(exp_str).evaluate())
