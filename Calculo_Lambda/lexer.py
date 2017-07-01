@@ -2,37 +2,17 @@
 """Calculator lexer example."""
 import ply.lex as lex
 
-"""
-Lista de tokens
-
-El analizador léxico de PLY (al llamar al método lex.lex()) va a buscar
-para cada uno de estos tokens una variable "t_TOKEN" en el módulo actual.
-
-Sí, es súper nigromántico pero es lo que hay.
-
-t_TOKEN puede ser:
-
-- Una expresión regular
-- Una función cuyo docstring sea una expresión regular (bizarro).
-
-En el segundo caso, podemos hacer algunas cosas "extras", como se
-muestra aquí abajo.
-
-"""
-
 tokens = (
-    'TWOPOINTS',
     'VARIABLE',
     'TRUE',
     'FALSE',
-    'ZERO',
-    'LAMBDA',
     'IF',
     'THEN',
     'ELSE',
-    'XTYPE',
-    'T',
+    'LAMBDA',
+    'TWOPOINTS',
     'POINT',
+    'ZERO',
     'SUCC',
     'OPENPAREN',
     'CLOSEPAREN',
@@ -43,27 +23,25 @@ tokens = (
     'ARROW',
 )
 
-t_VARIABLE = r'\d'
+t_ignore = ' '
+t_VARIABLE = r'x'
 t_TRUE = r'true'
 t_FALSE = r'false'
 t_IF = r'if'
-t_ELSE = r'else'
 t_THEN = r'then'
-t_ignore = ' '
+t_ELSE = r'else'
+t_LAMBDA = r'\\'
 t_TWOPOINTS = r':'
-t_LAMBDA = r'/'
+t_POINT = r'\.'
+t_ZERO = r'\d'
 t_SUCC = r'succ'
 t_OPENPAREN = r'\('
 t_CLOSEPAREN = r'\)'
-# t_POINT = r'\.'
-# t_PRED = r'pred'
-# t_ISZERO = r'iszero'
-# t_ARROW = r'\->'
-
-def t_ZERO(t):
-    r'\d'
-    t.value = int(t.value)
-    return t
+t_PRED = r'pred'
+t_ISZERO = r'iszero'
+t_BOOL = r'Bool'
+t_NAT = r'Nat'
+t_ARROW = r'->'
 
 # Build the lexer
 lexer = lex.lex()
@@ -73,4 +51,3 @@ def apply_lexer(string):
     lexer.input(string)
 
     return list(lexer)
-
