@@ -10,52 +10,61 @@ class NotFound(object):
 
 class Result(object):
 
-    def __init__(self, value):
+    def __init__(self, value, typeOf):
       self.value = value
+      self.type = typeOf
 
 class BoolExpression(object):
 
     def __init__(self, value):
-      self.value = value
-      self.type = 'Bool'
+      self.value = True if value == 'true' else False
+      self.type = BoolType('Bool')
 
-    def evaluate(self):
-        return Result(True if value == 'true' else False)
+    def evaluate(self, variable, value):
+        return Result(self, self.type)
 
-    def calculate(self):
-        return Result(self.value)
+    def calculate(self, dicc):
+        return Result(self, self.type)
 
-    def typeOf(self):
-        return self.type
+    def toString(self):
+        return 'true' if self.value == True else 'false'
 
 class ZeroExpression(object):
 
     def __init__(self, value):
         self.value = int(value)
-        self.type = 'Nat'
+        self.type = NatType('Nat')
 
-    def evaluate(self):
-        return Result(self.value)
+    def evaluate(self, variable, value):
+        return Result(self, self.type)
 
-    def calculate(self):
-        return self.evaluate()
+    def calculate(self, dicc):
+        return Result(self, self.type)
 
-    def typeOf(self):
-        return self.type
+    def toString(self):
+        return '0'
 
 class VariableExpression(object):
 
     def __init__(self, variable):
         self.variable = variable
+        self.type = None
 
-    def typeOf(self):
-        return NotFound(self.variable)
+    def evaluate(self, variable, value):
+        if (self.variable != variable):
+            return Result(self, self.type)
+        else:
+            return Result(value, self.type)
 
-    def evaluate(self, value):
-        return Result(value)
+    def calculate(self, dicc):
+        if self.variable in dicc.keys():
+            self.type = dicc[self.variable]
+            return Result(self, self.type)
+        else:
+            return Error('ERROR: El termino no es cerrado')
 
-    def calculate(self):
-        return Result(self.variable)
+    def toString(self):
+        return str(self.variable)
 
 class LambdaExpression(object):
 
@@ -65,16 +74,24 @@ class LambdaExpression(object):
         self.expression = expression
 
     def evaluate(self, value):
-        return self.expression.evaluate(value)
+        #agregar cuando da error primero
+        expression_result = self.expression.evaluate(self.variable, value)
+        return expression_result
 
-    def typeOf(self):
-        if isinstance(self.expression.typeOf(), NotFound):
-            return self.type.value() + '->' + self.type.value()
-        else:
-            return self.type.value() + '->' + self.expression.typeOf()
+    def calculate(self, dicc):
+        dicc[self.variable] = self.type
+        expression_result = self.expression.calculate(dicc)
+        if isinstance(expression_result, Error):
+            return expression_result
 
-    def calculate(self):
-        return Result('\\' + self.variable.calculate().value + ':' + self.type.value() + '.' + self.expression.calculate().value)
+        if isinstance(expression_result, NotFound):
+            return Error("Error no esta declarado el tipo")
+
+        self.expression = expression_result.value
+        return Result(self, TypeAndType(self.type, expression_result.type))
+
+    def toString(self):
+        return "\\" + self.variable + ":" + self.type.value() + "." + self.expression.toString()
 
 class IfExpression(object):
 
@@ -83,71 +100,98 @@ class IfExpression(object):
         self.true_condition = true_condition
         self.false_condition = false_condition
 
-    def evaluate(self, value):
-        if self.true_condition.typeOf() != self.false_condition.typeOf():
-          return Error('ERROR: Las dos opciones del if deben tener el mismo tipo')
-        else:
-          if self.condition.evaluate(value):
-            return Result(self.true_condition.evaluate(value))
-          else:
-            return Result(self.false_condition.evaluate(value))
-
-    def typeOf(self):
-        return self.false_condition.typeOf()
-
-    def calculate(self):
-        if self.true_condition.typeOf() != self.false_condition.typeOf():
+    def evaluate(self, variable, value):
+        true_condition_result = self.true_condition.evaluate(variable, value)
+        false_condition_result = self.false_condition.evaluate(variable, value)
+        if true_condition_result.type != false_condition_result.type:
             return Error('ERROR: Las dos opciones del if deben tener el mismo tipo')
         else:
-            return Result('if ' + str(self.condition.calculate().value) + ' then ' + str(self.true_condition.calculate().value) + ' else ' + str(self.false_condition.calculate().value))
+            if self.condition.evaluate(variable, value):
+                return Result(true_condition_result, true_condition_result.type)
+            else:
+                return Result(false_condition_result, false_condition_results.type)
+
+    def calculate(self, dicc):
+        true_condition_result = self.true_condition.calculate(dicc)
+        false_condition_result = self.false_condition.calculate(dicc)
+        if isinstance(true_condition_result, Error):
+            return true_condition_result
+
+        if isinstance(false_condition_result, Error):
+            return false_condition_result
+
+        if true_condition_result.type.value() != false_condition_result.type.value():
+            return Error('ERROR: Las dos opciones del if deben tener el mismo tipo')
+        else:
+            self.true_condition = true_condition_result.value
+            self.false_condition = false_condition_result.value
+            self.condition = self.condition.calculate(dicc).value
+            return Result(self, true_condition_result.type)
+
+    def toString(self):
+        return 'if ' + self.condition.toString() + ' then ' + self.true_condition.toString() + ' else ' + self.false_condition.toString()
 
 class SuccExpression(object):
 
     def __init__(self, expression):
         self.expression = expression
-        self.type = 'Nat'
+        self.type = NatType('Nat')
 
-    def calculate(self):
-        return Result('succ(' + str(self.expression.calculate().value) + ')')
-
-    def evaluate(self, value):
-        if isinstance(value, int):
-            return Result(self.expression.evaluate(value).value + 1)
+    def evaluate(self, variable, value):
+        if isinstance(value, NatType):
+            return Result(self.expression.evaluate(variable, value).value + 1, self.type)
         else:
-            return Error('ERROR: succ espera un valor de tipo Nat')
+            return Error("ERROR: succ espera un valor de tipo Nat")
 
-    def typeOf(self):
-        return self.type
+    def calculate(self, dicc):
+        if isinstance(self.expression, PredExpression):
+            subexpression_result = self.expression.expression.calculate(dicc)
+            return Result(subexpression_result.value, subexpression_result.type )
+        else:
+            self.expression = self.expression.calculate(dicc).value
+        return Result(self, self.type)
+
+    def toString(self):
+        return 'succ(' + self.expression.toString() + ')'
 
 class PredExpression(object):
 
     def __init__(self, expression):
         self.expression = expression
-        self.type = 'Nat'
+        self.type = NatType('Nat')
 
-    def evaluate(self, value):
-        return Result(self.expression.evaluate(value) - 1)
+    def evaluate(self, variable, value):
+      if isinstance(value, NatType):
+          return Result(self.expression.evaluate(variable, value) - 1, self.type)
+      else:
+          return Error("ERROR: pred espera un valor de tipo Nat")
 
-    def typeOf(self):
-        return self.type
+    def calculate(self, dicc):
+        self.expression = self.expression.calculate(dicc).value
+        return Result(self, self.type)
 
-    def calculate(self):
-        return Result('pred(' + str(self.expression.calculate().value) + ')')
+    def toString(self):
+        return 'pred(' + self.expression.toString() + ')'
 
-class IszeroExpression(object):
+class iszeroExpression(object):
 
     def __init__(self, expression):
         self.expression = expression
-        self.type = 'Bool'
+        self.type = BoolType('Bool')
 
-    def evaluate(self, value):
-        return Result(self.expression.evaluate(value) == 0)
+    def evaluate(self, variable, value):
+        if isinstance(value, NatType):
+            return Result(self.expression.evaluate(variable, value) == 0, self.type)
+        else:
+            return Error("ERROR: iszero espera un valor de tipo Nat")
 
-    def typeOf(self):
-        return self.type
 
-    def calculate(self):
-        return 'iszero(' + self.expression.calculate().value + ')'
+    def calculate(self, dicc):
+        self.expression = self.expression.calculate(dicc).value
+        return Result(self, self.type)
+
+    def toString(self):
+        return 'iszero(' + self.expression.toString() + ')'
 
 class ExpressionAndExpression(object):
 
@@ -155,11 +199,19 @@ class ExpressionAndExpression(object):
         self.expression1 = expression1
         self.expression2 = expression2
 
-    def calculate(self):
-        return self.expression1.evaluate(self.expression2.calculate().value)
-
-    def typeOf(self):
-        return self.expression1.typeOf()
+    def calculate(self, dicc):
+        expression1_result = self.expression1.calculate(dicc)
+        expression2_result = self.expression2.calculate(dicc)
+        if isinstance(expression1_result.type, TypeAndType):
+            if expression1_result.type.type1.value() == expression2_result.type.value():
+                return self.expression1.evaluate(expression2_result.value)
+            else:
+                Error("ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
+        else:
+          return Error("ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
+            # if expression1_result.type.value() == expression2_result.type.value():
+            #     return self.expression1.evaluate(expression2_result.value)
+            # else:
 
 class BoolType(object):
 
@@ -184,4 +236,4 @@ class TypeAndType(object):
         self.type2 = typeOf2
 
     def value(self):
-        return self.type
+        return self.type1.value() + '->' + self.type2.value()

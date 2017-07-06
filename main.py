@@ -8,8 +8,8 @@ while True:
     except EOFError:
         break
 
-    result = parse(exp_str).calculate()
+    result = parse(exp_str).calculate(dict())
     if isinstance(result, Error):
       print result.value
     else:
-      print(str(result.value) + ':' + str(parse(exp_str).typeOf()))
+      print result.value.toString() + ':' + result.type.value()

@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'expressionVARIABLE TRUE FALSE IF THEN ELSE LAMBDA TWOPOINTS POINT ZERO SUCC OPENPAREN CLOSEPAREN PRED ISZERO BOOL NAT ARROWexpression : VARIABLEexpression : TRUEexpression : FALSEexpression : IF expression THEN expression ELSE expressionexpression : LAMBDA expression TWOPOINTS type POINT expressionexpression : OPENPAREN expression CLOSEPAREN expressionexpression : ZEROexpression : SUCC OPENPAREN expression CLOSEPARENexpression : PRED OPENPAREN expression CLOSEPARENexpression : ISZERO OPENPAREN expression CLOSEPARENtype : BOOLtype : NATtype : type ARROW type'
+_lr_signature = 'expressionrightLAMBDAVARIABLETWOPOINTSPOINTrightIFTHENELSErightSUCCOPENPARENCLOSEPARENrightISZEROOPENPARENCLOSEPARENrightZEROrightTRUErightFALSEVARIABLE TRUE FALSE IF THEN ELSE LAMBDA TWOPOINTS POINT ZERO SUCC OPENPAREN CLOSEPAREN PRED ISZERO BOOL NAT ARROWexpression : VARIABLEexpression : TRUEexpression : FALSEexpression : IF expression THEN expression ELSE expressionexpression : LAMBDA VARIABLE TWOPOINTS type POINT expressionexpression : LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPARENexpression : OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPARENexpression : expression expressionexpression : OPENPAREN expression CLOSEPAREN expressionexpression : ZEROexpression : SUCC OPENPAREN expression CLOSEPARENexpression : PRED OPENPAREN expression CLOSEPARENexpression : ISZERO OPENPAREN expression CLOSEPARENtype : BOOLtype : NATtype : type ARROW type'
     
-_lr_action_items = {'THEN':([2,6,7,9,17,24,25,26,30,35,37,],[-3,-7,-1,-2,23,-10,-8,-9,-6,-5,-4,]),'FALSE':([0,8,10,11,12,13,14,22,23,32,34,],[2,2,2,2,2,2,2,2,2,2,2,]),'NAT':([21,33,],[27,27,]),'POINT':([27,28,29,36,],[-12,-11,32,-13,]),'PRED':([0,8,10,11,12,13,14,22,23,32,34,],[5,5,5,5,5,5,5,5,5,5,5,]),'CLOSEPAREN':([2,6,7,9,16,18,19,20,24,25,26,30,35,37,],[-3,-7,-1,-2,22,24,25,26,-10,-8,-9,-6,-5,-4,]),'$end':([2,3,6,7,9,24,25,26,30,35,37,],[-3,0,-7,-1,-2,-10,-8,-9,-6,-5,-4,]),'ARROW':([27,28,29,36,],[-12,-11,33,33,]),'ZERO':([0,8,10,11,12,13,14,22,23,32,34,],[6,6,6,6,6,6,6,6,6,6,6,]),'ELSE':([2,6,7,9,24,25,26,30,31,35,37,],[-3,-7,-1,-2,-10,-8,-9,-6,34,-5,-4,]),'VARIABLE':([0,8,10,11,12,13,14,22,23,32,34,],[7,7,7,7,7,7,7,7,7,7,7,]),'SUCC':([0,8,10,11,12,13,14,22,23,32,34,],[4,4,4,4,4,4,4,4,4,4,4,]),'BOOL':([21,33,],[28,28,]),'TWOPOINTS':([2,6,7,9,15,24,25,26,30,35,37,],[-3,-7,-1,-2,21,-10,-8,-9,-6,-5,-4,]),'ISZERO':([0,8,10,11,12,13,14,22,23,32,34,],[1,1,1,1,1,1,1,1,1,1,1,]),'LAMBDA':([0,8,10,11,12,13,14,22,23,32,34,],[8,8,8,8,8,8,8,8,8,8,8,]),'TRUE':([0,8,10,11,12,13,14,22,23,32,34,],[9,9,9,9,9,9,9,9,9,9,9,]),'OPENPAREN':([0,1,4,5,8,10,11,12,13,14,22,23,32,34,],[10,12,13,14,10,10,10,10,10,10,10,10,10,10,]),'IF':([0,8,10,11,12,13,14,22,23,32,34,],[11,11,11,11,11,11,11,11,11,11,11,]),}
+_lr_action_items = {'THEN':([2,6,7,9,13,19,27,28,29,33,41,44,47,48,],[-3,-10,-1,-2,-8,26,-13,-11,-12,-9,-5,-4,-6,-7,]),'FALSE':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[2,-3,2,-10,-1,-2,2,2,2,2,2,2,2,2,2,2,2,2,2,-13,-11,-12,2,2,2,2,2,2,2,2,2,2,2,-7,]),'NAT':([23,34,36,],[30,30,30,]),'POINT':([30,31,32,38,40,],[-15,37,-14,43,-16,]),'PRED':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[5,-3,5,-10,-1,-2,5,5,5,5,5,5,5,5,5,5,5,5,5,-13,-11,-12,-9,5,5,5,-5,5,5,-4,5,-5,-6,-7,]),'CLOSEPAREN':([2,6,7,9,13,17,20,21,22,27,28,29,33,41,44,45,46,47,48,],[-3,-10,-1,-2,-8,24,27,28,29,-13,-11,-12,-9,-5,-4,47,48,-6,-7,]),'$end':([2,3,6,7,9,13,27,28,29,33,41,44,47,48,],[-3,0,-10,-1,-2,-8,-13,-11,-12,-9,-5,-4,-6,-7,]),'ARROW':([30,31,32,38,40,],[-15,36,-14,36,36,]),'ZERO':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[6,-3,6,-10,-1,-2,6,6,6,6,6,6,6,6,6,6,6,6,6,-13,-11,-12,6,6,6,6,6,6,6,6,6,6,6,-7,]),'ELSE':([2,6,7,9,13,27,28,29,33,35,41,44,47,48,],[-3,-10,-1,-2,-8,-13,-11,-12,-9,39,-5,-4,-6,-7,]),'VARIABLE':([0,2,3,6,7,8,9,10,11,12,13,14,15,17,18,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[7,-3,7,-10,-1,16,-2,7,7,7,7,7,7,7,25,7,7,7,7,7,7,-13,-11,-12,-9,7,7,7,7,7,7,-4,7,7,-6,-7,]),'SUCC':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[4,-3,4,-10,-1,-2,4,4,4,4,4,4,4,4,4,4,4,4,4,-13,-11,-12,4,4,4,4,4,4,4,4,4,4,4,-7,]),'BOOL':([23,34,36,],[32,32,32,]),'TWOPOINTS':([16,25,],[23,34,]),'ISZERO':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[1,-3,1,-10,-1,-2,1,1,1,1,1,1,1,1,1,1,1,1,1,-13,-11,-12,1,1,1,1,1,1,1,1,1,1,1,-7,]),'LAMBDA':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[8,-3,8,-10,-1,-2,18,8,8,8,8,8,8,8,8,8,8,8,8,-13,-11,-12,-9,8,8,8,8,18,8,-4,8,8,-6,-7,]),'TRUE':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[9,-3,9,-10,-1,-2,9,9,9,9,9,9,9,9,9,9,9,9,9,-13,-11,-12,9,9,9,9,9,9,9,9,9,9,9,-7,]),'OPENPAREN':([0,1,2,3,4,5,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[10,12,-3,10,14,15,-10,-1,-2,10,10,10,10,10,10,10,10,10,10,10,10,10,-13,-11,-12,10,10,42,10,10,10,42,10,10,10,10,-7,]),'IF':([0,2,3,6,7,9,10,11,12,13,14,15,17,19,20,21,22,24,26,27,28,29,33,35,37,39,41,42,43,44,45,46,47,48,],[11,-3,11,-10,-1,-2,11,11,11,11,11,11,11,11,11,11,11,11,11,-13,-11,-12,-9,11,11,11,11,11,11,11,11,11,-6,-7,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'type':([21,33,],[29,36,]),'expression':([0,8,10,11,12,13,14,22,23,32,34,],[3,15,16,17,18,19,20,30,31,35,37,]),}
+_lr_goto_items = {'type':([23,34,36,],[31,38,40,]),'expression':([0,3,10,11,12,13,14,15,17,19,20,21,22,24,26,33,35,37,39,41,42,43,44,45,46,47,],[3,13,17,19,20,13,21,22,13,13,13,13,13,33,35,13,13,41,44,13,45,46,13,13,13,33,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,17 +26,20 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
-  ('expression -> VARIABLE','expression',1,'p_expression_variable','parser.py',9),
-  ('expression -> TRUE','expression',1,'p_expression_true','parser.py',13),
-  ('expression -> FALSE','expression',1,'p_expresion_false','parser.py',17),
-  ('expression -> IF expression THEN expression ELSE expression','expression',6,'p_expression_if','parser.py',21),
-  ('expression -> LAMBDA expression TWOPOINTS type POINT expression','expression',6,'p_expression_lambda','parser.py',25),
-  ('expression -> OPENPAREN expression CLOSEPAREN expression','expression',4,'p_expression_expression_expression','parser.py',29),
-  ('expression -> ZERO','expression',1,'p_expresion_zero','parser.py',33),
-  ('expression -> SUCC OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_succ','parser.py',37),
-  ('expression -> PRED OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_pred','parser.py',41),
-  ('expression -> ISZERO OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_izsero','parser.py',45),
-  ('type -> BOOL','type',1,'p_type_bool','parser.py',49),
-  ('type -> NAT','type',1,'p_type_nat','parser.py',53),
-  ('type -> type ARROW type','type',3,'p_type_type_type','parser.py',57),
+  ('expression -> VARIABLE','expression',1,'p_expression_variable','parser.py',20),
+  ('expression -> TRUE','expression',1,'p_expression_true','parser.py',24),
+  ('expression -> FALSE','expression',1,'p_expresion_false','parser.py',28),
+  ('expression -> IF expression THEN expression ELSE expression','expression',6,'p_expression_if','parser.py',32),
+  ('expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression','expression',6,'p_expression_lambda','parser.py',36),
+  ('expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN','expression',8,'p_expression_lambda_with_paren','parser.py',40),
+  ('expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN','expression',8,'p_expression_lambda_with_paren2','parser.py',44),
+  ('expression -> expression expression','expression',2,'p_expression_expression_expression','parser.py',48),
+  ('expression -> OPENPAREN expression CLOSEPAREN expression','expression',4,'p_expression_expression_expression_with_paren','parser.py',56),
+  ('expression -> ZERO','expression',1,'p_expresion_zero','parser.py',60),
+  ('expression -> SUCC OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_succ','parser.py',64),
+  ('expression -> PRED OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_pred','parser.py',68),
+  ('expression -> ISZERO OPENPAREN expression CLOSEPAREN','expression',4,'p_expression_izsero','parser.py',72),
+  ('type -> BOOL','type',1,'p_type_bool','parser.py',76),
+  ('type -> NAT','type',1,'p_type_nat','parser.py',80),
+  ('type -> type ARROW type','type',3,'p_type_type_type','parser.py',84),
 ]
