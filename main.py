@@ -8,7 +8,7 @@ while True:
     except EOFError:
         break
 
-    result = parse(exp_str).calculate(dict())
+    result = parse(exp_str).calculate()
     if isinstance(result, Error):
       print result.value
     else:

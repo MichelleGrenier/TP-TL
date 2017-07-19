@@ -74,11 +74,11 @@ def p_expression_izsero(p):
 
 def p_type_bool(p):
     'type : BOOL'
-    p[0] = BoolType(p[1])
+    p[0] = BoolType()
 
 def p_type_nat(p):
     'type : NAT'
-    p[0] = NatType(p[1])
+    p[0] = NatType()
 
 def p_type_type_type(p):
     'type : type ARROW type'
