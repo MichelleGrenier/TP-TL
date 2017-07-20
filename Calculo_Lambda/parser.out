@@ -8,44 +8,42 @@ Rule 2     expression -> TRUE
 Rule 3     expression -> FALSE
 Rule 4     expression -> IF expression THEN expression ELSE expression
 Rule 5     expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression
-Rule 6     expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-Rule 7     expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-Rule 8     expression -> expression expression
-Rule 9     expression -> OPENPAREN expression CLOSEPAREN expression
-Rule 10    expression -> ZERO
-Rule 11    expression -> SUCC OPENPAREN expression CLOSEPAREN
-Rule 12    expression -> PRED OPENPAREN expression CLOSEPAREN
-Rule 13    expression -> ISZERO OPENPAREN expression CLOSEPAREN
-Rule 14    type -> BOOL
-Rule 15    type -> NAT
-Rule 16    type -> type ARROW type
+Rule 6     expression -> OPENPAREN expression CLOSEPAREN
+Rule 7     expression -> expression expression
+Rule 8     expression -> ZERO
+Rule 9     expression -> SUCC OPENPAREN expression CLOSEPAREN
+Rule 10    expression -> PRED OPENPAREN expression CLOSEPAREN
+Rule 11    expression -> ISZERO OPENPAREN expression CLOSEPAREN
+Rule 12    type -> BOOL
+Rule 13    type -> NAT
+Rule 14    type -> type ARROW type
 
 Terminals, with rules where they appear
 
-ARROW                : 16
-BOOL                 : 14
-CLOSEPAREN           : 6 7 9 11 12 13
+ARROW                : 14
+BOOL                 : 12
+CLOSEPAREN           : 6 9 10 11
 ELSE                 : 4
 FALSE                : 3
 IF                   : 4
-ISZERO               : 13
-LAMBDA               : 5 6 7
-NAT                  : 15
-OPENPAREN            : 6 7 9 11 12 13
-POINT                : 5 6 7
-PRED                 : 12
-SUCC                 : 11
+ISZERO               : 11
+LAMBDA               : 5
+NAT                  : 13
+OPENPAREN            : 6 9 10 11
+POINT                : 5
+PRED                 : 10
+SUCC                 : 9
 THEN                 : 4
 TRUE                 : 2
-TWOPOINTS            : 5 6 7
-VARIABLE             : 1 5 6 7
-ZERO                 : 10
+TWOPOINTS            : 5
+VARIABLE             : 1 5
+ZERO                 : 8
 error                : 
 
 Nonterminals, with rules where they appear
 
-expression           : 4 4 4 5 6 7 8 8 9 9 11 12 13 0
-type                 : 5 6 7 16 16
+expression           : 4 4 4 5 6 7 7 9 10 11 0
+type                 : 5 14 14
 
 Parsing method: LALR
 
@@ -57,14 +55,12 @@ state 0
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -81,7 +77,7 @@ state 0
 
 state 1
 
-    (13) expression -> ISZERO . OPENPAREN expression CLOSEPAREN
+    (11) expression -> ISZERO . OPENPAREN expression CLOSEPAREN
 
     OPENPAREN       shift and go to state 12
 
@@ -90,7 +86,6 @@ state 2
 
     (3) expression -> FALSE .
 
-    CLOSEPAREN      reduce using rule 3 (expression -> FALSE .)
     VARIABLE        reduce using rule 3 (expression -> FALSE .)
     TRUE            reduce using rule 3 (expression -> FALSE .)
     FALSE           reduce using rule 3 (expression -> FALSE .)
@@ -102,27 +97,26 @@ state 2
     PRED            reduce using rule 3 (expression -> FALSE .)
     ISZERO          reduce using rule 3 (expression -> FALSE .)
     ELSE            reduce using rule 3 (expression -> FALSE .)
-    THEN            reduce using rule 3 (expression -> FALSE .)
+    CLOSEPAREN      reduce using rule 3 (expression -> FALSE .)
     $end            reduce using rule 3 (expression -> FALSE .)
+    THEN            reduce using rule 3 (expression -> FALSE .)
 
 
 state 3
 
     (0) S' -> expression .
-    (8) expression -> expression . expression
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -139,43 +133,42 @@ state 3
 
 state 4
 
-    (11) expression -> SUCC . OPENPAREN expression CLOSEPAREN
+    (9) expression -> SUCC . OPENPAREN expression CLOSEPAREN
 
     OPENPAREN       shift and go to state 14
 
 
 state 5
 
-    (12) expression -> PRED . OPENPAREN expression CLOSEPAREN
+    (10) expression -> PRED . OPENPAREN expression CLOSEPAREN
 
     OPENPAREN       shift and go to state 15
 
 
 state 6
 
-    (10) expression -> ZERO .
+    (8) expression -> ZERO .
 
-    CLOSEPAREN      reduce using rule 10 (expression -> ZERO .)
-    VARIABLE        reduce using rule 10 (expression -> ZERO .)
-    TRUE            reduce using rule 10 (expression -> ZERO .)
-    FALSE           reduce using rule 10 (expression -> ZERO .)
-    IF              reduce using rule 10 (expression -> ZERO .)
-    LAMBDA          reduce using rule 10 (expression -> ZERO .)
-    OPENPAREN       reduce using rule 10 (expression -> ZERO .)
-    ZERO            reduce using rule 10 (expression -> ZERO .)
-    SUCC            reduce using rule 10 (expression -> ZERO .)
-    PRED            reduce using rule 10 (expression -> ZERO .)
-    ISZERO          reduce using rule 10 (expression -> ZERO .)
-    ELSE            reduce using rule 10 (expression -> ZERO .)
-    THEN            reduce using rule 10 (expression -> ZERO .)
-    $end            reduce using rule 10 (expression -> ZERO .)
+    VARIABLE        reduce using rule 8 (expression -> ZERO .)
+    TRUE            reduce using rule 8 (expression -> ZERO .)
+    FALSE           reduce using rule 8 (expression -> ZERO .)
+    IF              reduce using rule 8 (expression -> ZERO .)
+    LAMBDA          reduce using rule 8 (expression -> ZERO .)
+    OPENPAREN       reduce using rule 8 (expression -> ZERO .)
+    ZERO            reduce using rule 8 (expression -> ZERO .)
+    SUCC            reduce using rule 8 (expression -> ZERO .)
+    PRED            reduce using rule 8 (expression -> ZERO .)
+    ISZERO          reduce using rule 8 (expression -> ZERO .)
+    ELSE            reduce using rule 8 (expression -> ZERO .)
+    CLOSEPAREN      reduce using rule 8 (expression -> ZERO .)
+    $end            reduce using rule 8 (expression -> ZERO .)
+    THEN            reduce using rule 8 (expression -> ZERO .)
 
 
 state 7
 
     (1) expression -> VARIABLE .
 
-    CLOSEPAREN      reduce using rule 1 (expression -> VARIABLE .)
     VARIABLE        reduce using rule 1 (expression -> VARIABLE .)
     TRUE            reduce using rule 1 (expression -> VARIABLE .)
     FALSE           reduce using rule 1 (expression -> VARIABLE .)
@@ -187,14 +180,14 @@ state 7
     PRED            reduce using rule 1 (expression -> VARIABLE .)
     ISZERO          reduce using rule 1 (expression -> VARIABLE .)
     ELSE            reduce using rule 1 (expression -> VARIABLE .)
-    THEN            reduce using rule 1 (expression -> VARIABLE .)
+    CLOSEPAREN      reduce using rule 1 (expression -> VARIABLE .)
     $end            reduce using rule 1 (expression -> VARIABLE .)
+    THEN            reduce using rule 1 (expression -> VARIABLE .)
 
 
 state 8
 
     (5) expression -> LAMBDA . VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> LAMBDA . VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 16
 
@@ -203,7 +196,6 @@ state 9
 
     (2) expression -> TRUE .
 
-    CLOSEPAREN      reduce using rule 2 (expression -> TRUE .)
     VARIABLE        reduce using rule 2 (expression -> TRUE .)
     TRUE            reduce using rule 2 (expression -> TRUE .)
     FALSE           reduce using rule 2 (expression -> TRUE .)
@@ -215,33 +207,31 @@ state 9
     PRED            reduce using rule 2 (expression -> TRUE .)
     ISZERO          reduce using rule 2 (expression -> TRUE .)
     ELSE            reduce using rule 2 (expression -> TRUE .)
-    THEN            reduce using rule 2 (expression -> TRUE .)
+    CLOSEPAREN      reduce using rule 2 (expression -> TRUE .)
     $end            reduce using rule 2 (expression -> TRUE .)
+    THEN            reduce using rule 2 (expression -> TRUE .)
 
 
 state 10
 
-    (7) expression -> OPENPAREN . LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (9) expression -> OPENPAREN . expression CLOSEPAREN expression
+    (6) expression -> OPENPAREN . expression CLOSEPAREN
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    LAMBDA          shift and go to state 18
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
     IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
     OPENPAREN       shift and go to state 10
     ZERO            shift and go to state 6
     SUCC            shift and go to state 4
@@ -258,14 +248,40 @@ state 11
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+
+    VARIABLE        shift and go to state 7
+    TRUE            shift and go to state 9
+    FALSE           shift and go to state 2
+    IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
+    OPENPAREN       shift and go to state 10
+    ZERO            shift and go to state 6
+    SUCC            shift and go to state 4
+    PRED            shift and go to state 5
+    ISZERO          shift and go to state 1
+
+    expression                     shift and go to state 18
+
+state 12
+
+    (11) expression -> ISZERO OPENPAREN . expression CLOSEPAREN
+    (1) expression -> . VARIABLE
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -280,22 +296,74 @@ state 11
 
     expression                     shift and go to state 19
 
-state 12
+state 13
 
-    (13) expression -> ISZERO OPENPAREN . expression CLOSEPAREN
+    (7) expression -> expression expression .
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+
+  ! shift/reduce conflict for VARIABLE resolved as shift
+  ! shift/reduce conflict for TRUE resolved as shift
+  ! shift/reduce conflict for FALSE resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for LAMBDA resolved as shift
+  ! shift/reduce conflict for OPENPAREN resolved as shift
+  ! shift/reduce conflict for ZERO resolved as shift
+  ! shift/reduce conflict for SUCC resolved as shift
+  ! shift/reduce conflict for PRED resolved as shift
+  ! shift/reduce conflict for ISZERO resolved as shift
+    ELSE            reduce using rule 7 (expression -> expression expression .)
+    CLOSEPAREN      reduce using rule 7 (expression -> expression expression .)
+    $end            reduce using rule 7 (expression -> expression expression .)
+    THEN            reduce using rule 7 (expression -> expression expression .)
+    VARIABLE        shift and go to state 7
+    TRUE            shift and go to state 9
+    FALSE           shift and go to state 2
+    IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
+    OPENPAREN       shift and go to state 10
+    ZERO            shift and go to state 6
+    SUCC            shift and go to state 4
+    PRED            shift and go to state 5
+    ISZERO          shift and go to state 1
+
+  ! VARIABLE        [ reduce using rule 7 (expression -> expression expression .) ]
+  ! TRUE            [ reduce using rule 7 (expression -> expression expression .) ]
+  ! FALSE           [ reduce using rule 7 (expression -> expression expression .) ]
+  ! IF              [ reduce using rule 7 (expression -> expression expression .) ]
+  ! LAMBDA          [ reduce using rule 7 (expression -> expression expression .) ]
+  ! OPENPAREN       [ reduce using rule 7 (expression -> expression expression .) ]
+  ! ZERO            [ reduce using rule 7 (expression -> expression expression .) ]
+  ! SUCC            [ reduce using rule 7 (expression -> expression expression .) ]
+  ! PRED            [ reduce using rule 7 (expression -> expression expression .) ]
+  ! ISZERO          [ reduce using rule 7 (expression -> expression expression .) ]
+
+    expression                     shift and go to state 13
+
+state 14
+
+    (9) expression -> SUCC OPENPAREN . expression CLOSEPAREN
+    (1) expression -> . VARIABLE
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -310,78 +378,20 @@ state 12
 
     expression                     shift and go to state 20
 
-state 13
+state 15
 
-    (8) expression -> expression expression .
-    (8) expression -> expression . expression
+    (10) expression -> PRED OPENPAREN . expression CLOSEPAREN
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-  ! shift/reduce conflict for VARIABLE resolved as shift
-  ! shift/reduce conflict for TRUE resolved as shift
-  ! shift/reduce conflict for FALSE resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-  ! shift/reduce conflict for LAMBDA resolved as shift
-  ! shift/reduce conflict for OPENPAREN resolved as shift
-  ! shift/reduce conflict for ZERO resolved as shift
-  ! shift/reduce conflict for SUCC resolved as shift
-  ! shift/reduce conflict for PRED resolved as shift
-  ! shift/reduce conflict for ISZERO resolved as shift
-    CLOSEPAREN      reduce using rule 8 (expression -> expression expression .)
-    ELSE            reduce using rule 8 (expression -> expression expression .)
-    THEN            reduce using rule 8 (expression -> expression expression .)
-    $end            reduce using rule 8 (expression -> expression expression .)
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-  ! VARIABLE        [ reduce using rule 8 (expression -> expression expression .) ]
-  ! TRUE            [ reduce using rule 8 (expression -> expression expression .) ]
-  ! FALSE           [ reduce using rule 8 (expression -> expression expression .) ]
-  ! IF              [ reduce using rule 8 (expression -> expression expression .) ]
-  ! LAMBDA          [ reduce using rule 8 (expression -> expression expression .) ]
-  ! OPENPAREN       [ reduce using rule 8 (expression -> expression expression .) ]
-  ! ZERO            [ reduce using rule 8 (expression -> expression expression .) ]
-  ! SUCC            [ reduce using rule 8 (expression -> expression expression .) ]
-  ! PRED            [ reduce using rule 8 (expression -> expression expression .) ]
-  ! ISZERO          [ reduce using rule 8 (expression -> expression expression .) ]
-
-    expression                     shift and go to state 13
-
-state 14
-
-    (11) expression -> SUCC OPENPAREN . expression CLOSEPAREN
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -396,63 +406,30 @@ state 14
 
     expression                     shift and go to state 21
 
-state 15
-
-    (12) expression -> PRED OPENPAREN . expression CLOSEPAREN
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 22
-
 state 16
 
     (5) expression -> LAMBDA VARIABLE . TWOPOINTS type POINT expression
-    (6) expression -> LAMBDA VARIABLE . TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
 
-    TWOPOINTS       shift and go to state 23
+    TWOPOINTS       shift and go to state 22
 
 
 state 17
 
-    (9) expression -> OPENPAREN expression . CLOSEPAREN expression
-    (8) expression -> expression . expression
+    (6) expression -> OPENPAREN expression . CLOSEPAREN
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      shift and go to state 24
+    CLOSEPAREN      shift and go to state 23
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
@@ -468,32 +445,51 @@ state 17
 
 state 18
 
-    (7) expression -> OPENPAREN LAMBDA . VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (5) expression -> LAMBDA . VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> LAMBDA . VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-
-    VARIABLE        shift and go to state 25
-
-
-state 19
-
     (4) expression -> IF expression . THEN expression ELSE expression
-    (8) expression -> expression . expression
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    THEN            shift and go to state 26
+    THEN            shift and go to state 24
+    VARIABLE        shift and go to state 7
+    TRUE            shift and go to state 9
+    FALSE           shift and go to state 2
+    IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
+    OPENPAREN       shift and go to state 10
+    ZERO            shift and go to state 6
+    SUCC            shift and go to state 4
+    PRED            shift and go to state 5
+    ISZERO          shift and go to state 1
+
+    expression                     shift and go to state 13
+
+state 19
+
+    (11) expression -> ISZERO OPENPAREN expression . CLOSEPAREN
+    (7) expression -> expression . expression
+    (1) expression -> . VARIABLE
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+
+    CLOSEPAREN      shift and go to state 25
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
@@ -509,23 +505,21 @@ state 19
 
 state 20
 
-    (13) expression -> ISZERO OPENPAREN expression . CLOSEPAREN
-    (8) expression -> expression . expression
+    (9) expression -> SUCC OPENPAREN expression . CLOSEPAREN
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      shift and go to state 27
+    CLOSEPAREN      shift and go to state 26
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
@@ -541,23 +535,21 @@ state 20
 
 state 21
 
-    (11) expression -> SUCC OPENPAREN expression . CLOSEPAREN
-    (8) expression -> expression . expression
+    (10) expression -> PRED OPENPAREN expression . CLOSEPAREN
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      shift and go to state 28
+    CLOSEPAREN      shift and go to state 27
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
@@ -573,89 +565,37 @@ state 21
 
 state 22
 
-    (12) expression -> PRED OPENPAREN expression . CLOSEPAREN
-    (8) expression -> expression . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (5) expression -> LAMBDA VARIABLE TWOPOINTS . type POINT expression
+    (12) type -> . BOOL
+    (13) type -> . NAT
+    (14) type -> . type ARROW type
 
-    CLOSEPAREN      shift and go to state 29
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
+    BOOL            shift and go to state 30
+    NAT             shift and go to state 28
 
-    expression                     shift and go to state 13
+    type                           shift and go to state 29
 
 state 23
 
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS . type POINT expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS . type POINT OPENPAREN expression CLOSEPAREN
-    (14) type -> . BOOL
-    (15) type -> . NAT
-    (16) type -> . type ARROW type
+    (6) expression -> OPENPAREN expression CLOSEPAREN .
 
-    BOOL            shift and go to state 32
-    NAT             shift and go to state 30
+    VARIABLE        reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    TRUE            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    FALSE           reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    IF              reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    LAMBDA          reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    OPENPAREN       reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    ZERO            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    SUCC            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    PRED            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    ISZERO          reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    ELSE            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    CLOSEPAREN      reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    $end            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
+    THEN            reduce using rule 6 (expression -> OPENPAREN expression CLOSEPAREN .)
 
-    type                           shift and go to state 31
 
 state 24
-
-    (9) expression -> OPENPAREN expression CLOSEPAREN . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 33
-
-state 25
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE . TWOPOINTS type POINT expression CLOSEPAREN
-    (5) expression -> LAMBDA VARIABLE . TWOPOINTS type POINT expression
-    (6) expression -> LAMBDA VARIABLE . TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-
-    TWOPOINTS       shift and go to state 34
-
-
-state 26
 
     (4) expression -> IF expression THEN . expression ELSE expression
     (1) expression -> . VARIABLE
@@ -663,14 +603,12 @@ state 26
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -683,241 +621,164 @@ state 26
     PRED            shift and go to state 5
     ISZERO          shift and go to state 1
 
-    expression                     shift and go to state 35
+    expression                     shift and go to state 31
+
+state 25
+
+    (11) expression -> ISZERO OPENPAREN expression CLOSEPAREN .
+
+    VARIABLE        reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    TRUE            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    FALSE           reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    IF              reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    LAMBDA          reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    OPENPAREN       reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    ZERO            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    SUCC            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    PRED            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    ISZERO          reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    ELSE            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    CLOSEPAREN      reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    $end            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    THEN            reduce using rule 11 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+
+
+state 26
+
+    (9) expression -> SUCC OPENPAREN expression CLOSEPAREN .
+
+    VARIABLE        reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    TRUE            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    FALSE           reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    IF              reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    LAMBDA          reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    OPENPAREN       reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    ZERO            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    SUCC            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    PRED            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    ISZERO          reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    ELSE            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    CLOSEPAREN      reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    $end            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    THEN            reduce using rule 9 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+
 
 state 27
 
-    (13) expression -> ISZERO OPENPAREN expression CLOSEPAREN .
+    (10) expression -> PRED OPENPAREN expression CLOSEPAREN .
 
-    CLOSEPAREN      reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    VARIABLE        reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    TRUE            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    FALSE           reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    IF              reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    LAMBDA          reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    OPENPAREN       reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    ZERO            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    SUCC            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    PRED            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    ISZERO          reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    ELSE            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    THEN            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
-    $end            reduce using rule 13 (expression -> ISZERO OPENPAREN expression CLOSEPAREN .)
+    VARIABLE        reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    TRUE            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    FALSE           reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    IF              reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    LAMBDA          reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    OPENPAREN       reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    ZERO            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    SUCC            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    PRED            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    ISZERO          reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    ELSE            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    CLOSEPAREN      reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    $end            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    THEN            reduce using rule 10 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
 
 
 state 28
 
-    (11) expression -> SUCC OPENPAREN expression CLOSEPAREN .
+    (13) type -> NAT .
 
-    CLOSEPAREN      reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    VARIABLE        reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    TRUE            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    FALSE           reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    IF              reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    LAMBDA          reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    OPENPAREN       reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    ZERO            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    SUCC            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    PRED            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    ISZERO          reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    ELSE            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    THEN            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
-    $end            reduce using rule 11 (expression -> SUCC OPENPAREN expression CLOSEPAREN .)
+    ARROW           reduce using rule 13 (type -> NAT .)
+    POINT           reduce using rule 13 (type -> NAT .)
 
 
 state 29
 
-    (12) expression -> PRED OPENPAREN expression CLOSEPAREN .
+    (5) expression -> LAMBDA VARIABLE TWOPOINTS type . POINT expression
+    (14) type -> type . ARROW type
 
-    CLOSEPAREN      reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    VARIABLE        reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    TRUE            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    FALSE           reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    IF              reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    LAMBDA          reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    OPENPAREN       reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    ZERO            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    SUCC            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    PRED            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    ISZERO          reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    ELSE            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    THEN            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
-    $end            reduce using rule 12 (expression -> PRED OPENPAREN expression CLOSEPAREN .)
+    POINT           shift and go to state 33
+    ARROW           shift and go to state 32
 
 
 state 30
 
-    (15) type -> NAT .
+    (12) type -> BOOL .
 
-    ARROW           reduce using rule 15 (type -> NAT .)
-    POINT           reduce using rule 15 (type -> NAT .)
+    ARROW           reduce using rule 12 (type -> BOOL .)
+    POINT           reduce using rule 12 (type -> BOOL .)
 
 
 state 31
 
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS type . POINT expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type . POINT OPENPAREN expression CLOSEPAREN
-    (16) type -> type . ARROW type
+    (4) expression -> IF expression THEN expression . ELSE expression
+    (7) expression -> expression . expression
+    (1) expression -> . VARIABLE
+    (2) expression -> . TRUE
+    (3) expression -> . FALSE
+    (4) expression -> . IF expression THEN expression ELSE expression
+    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    POINT           shift and go to state 37
-    ARROW           shift and go to state 36
+    ELSE            shift and go to state 34
+    VARIABLE        shift and go to state 7
+    TRUE            shift and go to state 9
+    FALSE           shift and go to state 2
+    IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
+    OPENPAREN       shift and go to state 10
+    ZERO            shift and go to state 6
+    SUCC            shift and go to state 4
+    PRED            shift and go to state 5
+    ISZERO          shift and go to state 1
 
+    expression                     shift and go to state 13
 
 state 32
 
-    (14) type -> BOOL .
+    (14) type -> type ARROW . type
+    (12) type -> . BOOL
+    (13) type -> . NAT
+    (14) type -> . type ARROW type
 
-    ARROW           reduce using rule 14 (type -> BOOL .)
-    POINT           reduce using rule 14 (type -> BOOL .)
+    BOOL            shift and go to state 30
+    NAT             shift and go to state 28
 
+    type                           shift and go to state 35
 
 state 33
 
-    (9) expression -> OPENPAREN expression CLOSEPAREN expression .
-    (8) expression -> expression . expression
+    (5) expression -> LAMBDA VARIABLE TWOPOINTS type POINT . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    VARIABLE        reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    IF              reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    LAMBDA          reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    PRED            reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    ELSE            reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    THEN            reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
-    $end            reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .)
+    VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
+    IF              shift and go to state 11
+    LAMBDA          shift and go to state 8
     OPENPAREN       shift and go to state 10
     ZERO            shift and go to state 6
     SUCC            shift and go to state 4
+    PRED            shift and go to state 5
     ISZERO          shift and go to state 1
 
-  ! TRUE            [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! FALSE           [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! OPENPAREN       [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! ZERO            [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! SUCC            [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! ISZERO          [ reduce using rule 9 (expression -> OPENPAREN expression CLOSEPAREN expression .) ]
-  ! VARIABLE        [ shift and go to state 7 ]
-  ! IF              [ shift and go to state 11 ]
-  ! LAMBDA          [ shift and go to state 8 ]
-  ! PRED            [ shift and go to state 5 ]
-
-    expression                     shift and go to state 13
+    expression                     shift and go to state 36
 
 state 34
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS . type POINT expression CLOSEPAREN
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS . type POINT expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS . type POINT OPENPAREN expression CLOSEPAREN
-    (14) type -> . BOOL
-    (15) type -> . NAT
-    (16) type -> . type ARROW type
-
-    BOOL            shift and go to state 32
-    NAT             shift and go to state 30
-
-    type                           shift and go to state 38
-
-state 35
-
-    (4) expression -> IF expression THEN expression . ELSE expression
-    (8) expression -> expression . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    ELSE            shift and go to state 39
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 13
-
-state 36
-
-    (16) type -> type ARROW . type
-    (14) type -> . BOOL
-    (15) type -> . NAT
-    (16) type -> . type ARROW type
-
-    BOOL            shift and go to state 32
-    NAT             shift and go to state 30
-
-    type                           shift and go to state 40
-
-state 37
-
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS type POINT . expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type POINT . OPENPAREN expression CLOSEPAREN
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    OPENPAREN       shift and go to state 42
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 41
-
-state 38
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type . POINT expression CLOSEPAREN
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS type . POINT expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type . POINT OPENPAREN expression CLOSEPAREN
-    (16) type -> type . ARROW type
-
-    POINT           shift and go to state 43
-    ARROW           shift and go to state 36
-
-
-state 39
 
     (4) expression -> IF expression THEN expression ELSE . expression
     (1) expression -> . VARIABLE
@@ -925,14 +786,12 @@ state 39
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
@@ -945,43 +804,41 @@ state 39
     PRED            shift and go to state 5
     ISZERO          shift and go to state 1
 
-    expression                     shift and go to state 44
+    expression                     shift and go to state 37
 
-state 40
+state 35
 
-    (16) type -> type ARROW type .
-    (16) type -> type . ARROW type
+    (14) type -> type ARROW type .
+    (14) type -> type . ARROW type
 
   ! shift/reduce conflict for ARROW resolved as shift
-    POINT           reduce using rule 16 (type -> type ARROW type .)
-    ARROW           shift and go to state 36
+    POINT           reduce using rule 14 (type -> type ARROW type .)
+    ARROW           shift and go to state 32
 
-  ! ARROW           [ reduce using rule 16 (type -> type ARROW type .) ]
+  ! ARROW           [ reduce using rule 14 (type -> type ARROW type .) ]
 
 
-state 41
+state 36
 
     (5) expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .
-    (8) expression -> expression . expression
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
     PRED            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
     ELSE            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
-    THEN            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
+    CLOSEPAREN      reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
     $end            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
+    THEN            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
     VARIABLE        shift and go to state 7
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
@@ -1005,95 +862,29 @@ state 41
 
     expression                     shift and go to state 13
 
-state 42
-
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN . expression CLOSEPAREN
-    (7) expression -> OPENPAREN . LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (9) expression -> OPENPAREN . expression CLOSEPAREN expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    LAMBDA          shift and go to state 18
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 45
-
-state 43
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT . expression CLOSEPAREN
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS type POINT . expression
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type POINT . OPENPAREN expression CLOSEPAREN
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    OPENPAREN       shift and go to state 42
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 46
-
-state 44
+state 37
 
     (4) expression -> IF expression THEN expression ELSE expression .
-    (8) expression -> expression . expression
+    (7) expression -> expression . expression
     (1) expression -> . VARIABLE
     (2) expression -> . TRUE
     (3) expression -> . FALSE
     (4) expression -> . IF expression THEN expression ELSE expression
     (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
+    (6) expression -> . OPENPAREN expression CLOSEPAREN
+    (7) expression -> . expression expression
+    (8) expression -> . ZERO
+    (9) expression -> . SUCC OPENPAREN expression CLOSEPAREN
+    (10) expression -> . PRED OPENPAREN expression CLOSEPAREN
+    (11) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
 
-    CLOSEPAREN      reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     VARIABLE        reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     LAMBDA          reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     PRED            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     ELSE            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
-    THEN            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    CLOSEPAREN      reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     $end            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
+    THEN            reduce using rule 4 (expression -> IF expression THEN expression ELSE expression .)
     TRUE            shift and go to state 9
     FALSE           shift and go to state 2
     IF              shift and go to state 11
@@ -1114,150 +905,6 @@ state 44
   ! PRED            [ shift and go to state 5 ]
 
     expression                     shift and go to state 13
-
-state 45
-
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression . CLOSEPAREN
-    (9) expression -> OPENPAREN expression . CLOSEPAREN expression
-    (8) expression -> expression . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    CLOSEPAREN      shift and go to state 47
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    PRED            shift and go to state 5
-    ISZERO          shift and go to state 1
-
-    expression                     shift and go to state 13
-
-state 46
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression . CLOSEPAREN
-    (5) expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .
-    (8) expression -> expression . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    CLOSEPAREN      shift and go to state 48
-    PRED            reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .)
-    VARIABLE        shift and go to state 7
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    IF              shift and go to state 11
-    LAMBDA          shift and go to state 8
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    ISZERO          shift and go to state 1
-
-  ! CLOSEPAREN      [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! VARIABLE        [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! TRUE            [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! FALSE           [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! IF              [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! LAMBDA          [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! OPENPAREN       [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! ZERO            [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! SUCC            [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! ISZERO          [ reduce using rule 5 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression .) ]
-  ! PRED            [ shift and go to state 5 ]
-
-    expression                     shift and go to state 13
-
-state 47
-
-    (6) expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .
-    (9) expression -> OPENPAREN expression CLOSEPAREN . expression
-    (1) expression -> . VARIABLE
-    (2) expression -> . TRUE
-    (3) expression -> . FALSE
-    (4) expression -> . IF expression THEN expression ELSE expression
-    (5) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT expression
-    (6) expression -> . LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN
-    (7) expression -> . OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN
-    (8) expression -> . expression expression
-    (9) expression -> . OPENPAREN expression CLOSEPAREN expression
-    (10) expression -> . ZERO
-    (11) expression -> . SUCC OPENPAREN expression CLOSEPAREN
-    (12) expression -> . PRED OPENPAREN expression CLOSEPAREN
-    (13) expression -> . ISZERO OPENPAREN expression CLOSEPAREN
-
-    CLOSEPAREN      reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    VARIABLE        reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    IF              reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    LAMBDA          reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    PRED            reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    ELSE            reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    THEN            reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    $end            reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .)
-    TRUE            shift and go to state 9
-    FALSE           shift and go to state 2
-    OPENPAREN       shift and go to state 10
-    ZERO            shift and go to state 6
-    SUCC            shift and go to state 4
-    ISZERO          shift and go to state 1
-
-  ! TRUE            [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! FALSE           [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! OPENPAREN       [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! ZERO            [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! SUCC            [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! ISZERO          [ reduce using rule 6 (expression -> LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN .) ]
-  ! VARIABLE        [ shift and go to state 7 ]
-  ! IF              [ shift and go to state 11 ]
-  ! LAMBDA          [ shift and go to state 8 ]
-  ! PRED            [ shift and go to state 5 ]
-
-    expression                     shift and go to state 33
-
-state 48
-
-    (7) expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .
-
-    CLOSEPAREN      reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    VARIABLE        reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    TRUE            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    FALSE           reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    IF              reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    LAMBDA          reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    OPENPAREN       reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    ZERO            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    SUCC            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    PRED            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    ISZERO          reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    ELSE            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    THEN            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-    $end            reduce using rule 7 (expression -> OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN .)
-
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
@@ -1271,4 +918,4 @@ WARNING: shift/reduce conflict for ZERO in state 13 resolved as shift
 WARNING: shift/reduce conflict for SUCC in state 13 resolved as shift
 WARNING: shift/reduce conflict for PRED in state 13 resolved as shift
 WARNING: shift/reduce conflict for ISZERO in state 13 resolved as shift
-WARNING: shift/reduce conflict for ARROW in state 40 resolved as shift
+WARNING: shift/reduce conflict for ARROW in state 35 resolved as shift

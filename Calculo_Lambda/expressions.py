@@ -44,7 +44,7 @@ class VariableExpression(object):
 
     def __init__(self, variable):
         self.variable = variable
-        self.type = None
+        self.type = NoneType(variable)
 
     def calculate(self):
       dic = dict()
@@ -74,14 +74,16 @@ class LambdaExpression(object):
         else:
             self.expression = result.value
             if self.variable in result.dic.keys():
-                if result.dic[self.variable] == None:
+                if isinstance(result.type, NoneType):
+                    del result.dic[self.variable]
+                    result.type = result.type.updateType(self.variable, self.type)
                     return Result(self, TypeAndType(self.type, self.type), result.dic)
                 else:
-                    if self.type == result.dic[self.variable].value():
+                    if self.type.value() == result.dic[self.variable].value():
                         del result.dic[self.variable]
                         return Result(self, TypeAndType(self.type, result.type), result.dic)
                     else:
-                        return Error('La variable tiene un tipo invalido')
+                        return Error('La expression espera un valor de tip')
 
             return Result(self, TypeAndType(self.type, result.type), result.dic)
 
@@ -89,7 +91,8 @@ class LambdaExpression(object):
         return self.expression.replace(self.variable, value)
 
     def replace(self, variable, value):
-        return self.expression.replace(variable, value)
+        self.expression.replace(variable, value)
+        return self
 
     def toString(self):
         return "\\" + self.variable + ":" + self.type.value() + "." + self.expression.toString()
@@ -118,34 +121,42 @@ class IfExpression(object):
         if isinstance(false_condition_result, Error):
             return false_condition_result
 
-        if true_condition_result.type == None:
+        if isinstance(true_condition_result.type, NoneType):
             true_condition_result.type = false_condition_result.type
         else:
-            if false_condition_result.type == None:
+            if isinstance(false_condition_result.type, NoneType):
                 false_condition_result.type = true_condition_result.type
             else:
-                if true_condition_result.type.value() != false_condition_result.type.value():
-                    return Error('Los dos resultados posibles del if tienen que ser del mismo tipo')
+              outputType_true = true_condition_result.type
+              outputType_false = false_condition_result.type
+              if isinstance(true_condition_result.type, TypeAndType):
+                  outputType_true = true_condition_result.type.outputType()
+              if isinstance(false_condition_result.type, TypeAndType):
+                  outputType_false = false_condition_result.type.outputType()
+
+              if outputType_true.value() != outputType_false.value():
+                  return Error('Los dos resultados posibles del if tienen que ser del mismo tipo')
+
         # Si el type es None entonces es porque hay una variable que tiene que ser boolean
         # De las unicas que no sabemos el output type es cuando es una variable o un if
-        if condition_result.type == None:
+        if isinstance(condition_result.type,NoneType):
             condition_result.type = BoolType()
             for key in condition_result.dic.keys():
-                if condition_result.dic[key] == None:
-                    condition_result.dic[key] == BoolType()
+                if isinstance(condition_result.dic[key], NoneType):
+                    condition_result.dic[key] = BoolType()
         else:
             # si es None entonces es un TypeAndType
             outputType = condition_result.type.outputType()
-            if outputType == None:
-                condition_result.type.updateType(BoolType())
+            if isinstance(outputType, NoneType):
+                condition_result.type = condition_result.type.updateType(outputType.variable, BoolType())
                 for key in condition_result.dic.keys():
-                    if condition_result.dic[key] == None:
+                    if isinstance(condition_result.dic[key], NoneType):
                         condition_result.dic[key] == BoolType()
             else:
                 if not isinstance(outputType, BoolType):
                     return Error('La condicion debe ser un boolean')
 
-                if isinstance(condition_result, BoolExpression):
+                if isinstance(condition_result.value, BoolExpression):
                     return true_condition_result if condition_result.value.value else false_condition_result
 
         newDic = dict()
@@ -177,18 +188,18 @@ class SuccExpression(object):
 
         # si la expression tiene tipo None entonces hay una variable de la cual
         # no sabemos el tipo
-        if expression_result.type == None:
+        if isinstance(expression_result.type, NoneType):
             expression_result.type = NatType()
             for key in expression_result.dic.keys():
-                if expression_result.dic[key] == None:
+                if isinstance(expression_result.dic[key], NoneType):
                     expression_result.dic[key] == NatType()
             return Result(self, NatType(), expression_result.dic)
         else:
             outputType = expression_result.type.outputType()
-            if outputType == None:
-                condition_result.type.updateType(NatType())
+            if isinstance(outputType, NoneType):
+                condition_result = condition_result.type.updateType(outputType.variable, NatType())
                 for key in expression_result.dic.keys():
-                    if expression_result.dic[key] == None:
+                    if isinstance(expression_result.dic[key], NoneType):
                         expression_result.dic[key] == NatType()
             else:
                 if not isinstance(outputType, NatType):
@@ -220,17 +231,17 @@ class PredExpression(object):
 
         # si la expression tiene tipo None entonces hay una variable de la cual
         # no sabemos el tipo
-        if expression_result.type == None:
+        if isinstance(expression_result.type, NoneType):
             expression_result.type = NatType()
             for key in expression_result.dic.keys():
-                if expression_result.dic[key] == None:
+                if isinstance(expression_result.dic[key], NoneType):
                     expression_result.dic[key] == NatType()
         else:
             outputType = expression_result.type.outputType()
-            if outputType == None:
-                condition_result.type.updateType(NatType())
+            if isinstance(outputType, NoneType):
+                condition_result = condition_result.type.updateType(outputType.variable, NatType())
                 for key in expression_result.dic.keys():
-                    if expression_result.dic[key] == None:
+                    if isinstance(expression_result.dic[key], NoneType):
                         expression_result.dic[key] == NatType()
             else:
                 if not isinstance(outputType, NatType):
@@ -262,11 +273,11 @@ class iszeroExpression(object):
 
         # si la expression tiene tipo None entonces hay una variable de la cual
         # no sabemos el tipo
-        if isinstance(expression_result, ZeroExpression):
-            return Result(BoolExpression('True'), BoolType(), expression_result.dic)
+        if isinstance(expression_result.value, ZeroExpression):
+            return Result(BoolExpression('true'), BoolType(), expression_result.dic)
         else:
-            if expression_result.type != None:
-                return Result(BoolExpression('False'), BoolType(), expression_result.dic)
+            if not isinstance(expression_result.type, NoneType):
+                return Result(BoolExpression('false'), BoolType(), expression_result.dic)
 
             return Result(self, self.type, expression_result.dic)
 
@@ -284,14 +295,32 @@ class ExpressionAndExpression(object):
         self.expression2 = expression2
 
     def calculate(self):
+        if isinstance(self.expression2, ExpressionAndExpression):
+            return ExpressionAndExpression(ExpressionAndExpression(self.expression1, self.expression2.expression1).calculate().value, self.expression2.expression2).calculate()
+
         expression1_result = self.expression1.calculate()
+        self.expression1 = expression1_result.value
         expression2_result = self.expression2.calculate()
+        self.expression2 = expression2_result.value
 
         if isinstance(expression1_result, Error):
             return expression1_result
 
         if isinstance(expression2_result, Error):
             return expression2_result
+
+        # si es none entonces hay una rvariable que toma una funcion lambda
+        if isinstance(expression1_result.type, NoneType):
+            newDic = dict()
+            newDic.update(expression1_result.dic)
+            newDic.update(expression2_result.dic)
+            return Result(self, expression1_result.type, newDic)
+
+        if isinstance(expression2_result.type, NoneType):
+            newDic = dict()
+            newDic.update(expression1_result.dic)
+            newDic.update(expression2_result.dic)
+            return Result(self, expression1_result.type, newDic)
 
         if not isinstance(expression1_result.value, LambdaExpression):
             return Error('La primera expression no tiene como dominio al tipo de la segunda')
@@ -300,6 +329,14 @@ class ExpressionAndExpression(object):
             return expression1_result.value.replaceVariable(expression2_result.value).calculate()
         else:
             return Error("ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
+
+    def toString(self):
+        return self.expression1.toString() + ' ' + self.expression2.toString()
+
+    def replace(self, variable, value):
+        self.expression1 = self.expression1.replace(variable, value)
+        self.expression2 = self.expression2.replace(variable, value)
+        return self
 
 class BoolType(object):
 
@@ -310,6 +347,9 @@ class BoolType(object):
         return self.type
 
     def outputType(self):
+        return self
+
+    def updateType(self, variable, type):
         return self
 
 class NatType(object):
@@ -323,6 +363,9 @@ class NatType(object):
     def outputType(self):
         return self
 
+    def updateType(self, variable, type):
+        return self
+
 class TypeAndType(object):
 
     def __init__(self, typeOf1, typeOf2):
@@ -330,13 +373,32 @@ class TypeAndType(object):
         self.type2 = typeOf2
 
     def value(self):
-        return self.type1.value() + '->' + self.type2.value()
+        type1 = self.type1.value()
+        type2 = self.type2.value()
+
+        if isinstance(self.type1, TypeAndType):
+            type1 = '(' + type1 + ')'
+
+        if isinstance(self.type2, TypeAndType):
+            type2 = '(' + type2 + ')'
+
+        return type1 + '->' + type2
 
     def outputType(self):
         return self.type2.outputType()
 
-    def updateType(self, typeOf):
-        if self.type2 == None:
-            return TypeAndType(self.type1, typeOf)
-        else:
-            return TypeAndType(self.type1, self.type2.updateType(typeOf))
+    def updateType(self, variable, typeOf):
+        self.type1 = self.type1.updateType(variable, typeOf)
+        self.type2 = self.type2.updateType(variable, typeOf)
+        return self
+
+class NoneType(object):
+
+    def __init__(self, variable):
+        self.variable = variable
+
+    def updateType(self, variable, typeOf):
+        return typeOf
+
+    def value(self):
+        return None

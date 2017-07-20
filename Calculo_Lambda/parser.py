@@ -36,25 +36,22 @@ def p_expression_lambda(p):
     'expression : LAMBDA VARIABLE TWOPOINTS type POINT expression'
     p[0] = LambdaExpression(p[2], p[4], p[6])
 
-def p_expression_lambda_with_paren(p):
-    'expression : LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN'
-    p[0] = LambdaExpression(p[2], p[4], p[7])
+# def p_expression_lambda_with_paren(p):
+#     'expression : LAMBDA VARIABLE TWOPOINTS type POINT OPENPAREN expression CLOSEPAREN'
+#     p[0] = LambdaExpression(p[2], p[4], p[7])
+#
 
-def p_expression_lambda_with_paren2(p):
-    'expression : OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN'
-    p[0] = LambdaExpression(p[3], p[5], p[7])
+# def p_expression_lambda_with_paren2(p):
+#     'expression : OPENPAREN LAMBDA VARIABLE TWOPOINTS type POINT expression CLOSEPAREN'
+#     p[0] = LambdaExpression(p[3], p[5], p[7])
+
+def p_expression_with_paren(p):
+    'expression : OPENPAREN expression CLOSEPAREN'
+    p[0] = p[2]
 
 def p_expression_expression_expression(p):
     'expression : expression expression'
     p[0] = ExpressionAndExpression(p[1], p[2])
-
-def p_expression_expression_expression_with_paren(p):
-    'expression : OPENPAREN expression CLOSEPAREN expression'
-    p[0] = ExpressionAndExpression(p[2], p[4])
-
-def p_expression_expression_expression_with_paren(p):
-    'expression : OPENPAREN expression CLOSEPAREN expression'
-    p[0] = ExpressionAndExpression(p[2], p[4])
 
 def p_expresion_zero(p):
     'expression : ZERO'
