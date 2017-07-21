@@ -44,26 +44,26 @@ Estas cosas son menos importantes
 
 * No aclaramos que expresion es la que espera un tipo distinto al pasado
 
-	if result.dic[self.variable].value() != self.type.value():
-						return Error( 'esperaba un valor de tipo ' + result.type.value())    
+		if result.dic[self.variable].value() != self.type.value():
+			return Error( 'esperaba un valor de tipo ' + result.type.value())    
 		
 
 	podriamos hacer, por ejemplo:
 
-	if result.dic[self.variable].value() != self.type.value():
-						return Error( self.expression.toStringParaError() +'La expresion esperaba un valor de tipo ' + result.type.value())
+		if result.dic[self.variable].value() != self.type.value():
+			return Error( self.expression.toStringParaError() +'La expresion esperaba un valor de tipo ' + result.type.value())
 
 
 	agregando la funcion, por ejemplo para succ:
 
-	def toStringParaError(self):
+		def toStringParaError(self):
 			return 'succ' 
 			
 			
 			
 * interpreta cualquier numero como cero, estan usando la macro n= succ^n(0) y no creo que sea obligatorio admitirla
 
-	(\x:Nat.succ(succ(x))) 3 --------> succ(succ(0)):Nat
+		(\x:Nat.succ(succ(x))) 3 --------> succ(succ(0)):Nat
 
   podriamos hacer una funcioncita q si lee numeros en la cadena de entrada
   los transforme a succ(succ(..))
