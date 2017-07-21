@@ -10,7 +10,7 @@
 	(\x:Nat.succ(x))( (\y:Nat.succ(y)) succ(0) )
 
 
-*isZero :
+* isZero :
 
 	-no chequea tipos
 		iszero(false)   -------> iszero(false):Bool
@@ -27,13 +27,17 @@
 		if iszero(pred(0)) then true else false
 
 
-este anda bien:		isZero(pred(succ(0)))---> true:Bool
+	-este anda bien:   
+		
+		isZero(pred(succ(0)))---> true:Bool
 
 
 
---estas cosas son menos importantes
-	
-	
+
+Estas cosas son menos importantes
+-----------------------------------	
+
+
 * No aclaramos que expresion es la que espera un tipo distinto al pasado
 
 	if result.dic[self.variable].value() != self.type.value():
