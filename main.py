@@ -1,15 +1,15 @@
-"""Archivo principal de calculadora."""
+"""Archivo principal de calculo Lambda."""
 from Calculo_Lambda import parse
 from Calculo_Lambda.expressions import Error, Result
 
 while True:
     try:
-        exp_str = raw_input('calc> ')
+        exp_str = raw_input('CLambda> ')
     except EOFError:
         break
 
     result = parse(exp_str).calculate()
     if isinstance(result, Error):
-      print result.value
+      print 'ERROR: ' + result.value
     else:
-      print result.value.toString() + ':' + result.type.value()
+      print 'OK: ' + result.value.toString() + ':' + result.type.value()
