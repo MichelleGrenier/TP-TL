@@ -230,8 +230,8 @@ class PredExpression(object):
             # si la expresion no es de tipo Nat
             if not isinstance(outputType_expression, NatType): return Error('pred espera un valor de tipo Nat')
 
-        #si la expression es de tipo pred cancelo el suc con el pred
-        if isinstance(expression_result.value, SuccExpression): return expression_result.value.expression
+        #si la expression es de tipo succ cancelo el pred con el succ
+        if isinstance(expression_result.value, SuccExpression): return Result(expression_result.value.expression, self.type, expression_result.dic)
 
         return Result(self, self.type, expression_result.dic)
 
