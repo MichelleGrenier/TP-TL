@@ -79,6 +79,10 @@ class LambdaExpression(object):
                     result.type = result.type.updateType(self.variable, self.type)
                     return Result(self, TypeAndType(self.type, self.type), result.dic)
                 else:
+                    if isinstance(result.dic[self.variable], NoneType):
+                        del result.dic[self.variable]
+                        return Result(self, TypeAndType(self.type, result.type), result.dic)
+
                     if self.type.value() == result.dic[self.variable].value():
                         del result.dic[self.variable]
                         return Result(self, TypeAndType(self.type, result.type), result.dic)
@@ -134,12 +138,20 @@ class IfExpression(object):
               if isinstance(false_condition_result.type, TypeAndType):
                   outputType_false = false_condition_result.type.outputType()
 
+              if isinstance(outputType_true, NoneType):
+                  outputType_true = false_condition_result.type
+                  true_condition_result.type = false_condition_result.type
+
+              if isinstance(outputType_false, NoneType):
+                  outputType_false = true_condition_result.type
+                  false_condition_result.type = true_condition_result.type
+
               if outputType_true.value() != outputType_false.value():
                   return Error('Los dos resultados posibles del if tienen que ser del mismo tipo')
 
         # Si el type es None entonces es porque hay una variable que tiene que ser boolean
         # De las unicas que no sabemos el output type es cuando es una variable o un if
-        if isinstance(condition_result.type,NoneType):
+        if isinstance(condition_result.type, NoneType):
             condition_result.type = BoolType()
             for key in condition_result.dic.keys():
                 if isinstance(condition_result.dic[key], NoneType):
@@ -192,8 +204,8 @@ class SuccExpression(object):
             expression_result.type = NatType()
             for key in expression_result.dic.keys():
                 if isinstance(expression_result.dic[key], NoneType):
-                    expression_result.dic[key] == NatType()
-            return Result(self, NatType(), expression_result.dic)
+                    expression_result.dic[key] = NatType()
+            return Result(self, self.type, expression_result.dic)
         else:
             outputType = expression_result.type.outputType()
             if isinstance(outputType, NoneType):
@@ -236,6 +248,7 @@ class PredExpression(object):
             for key in expression_result.dic.keys():
                 if isinstance(expression_result.dic[key], NoneType):
                     expression_result.dic[key] == NatType()
+            return Result(self, self.type, expression_result.dic)
         else:
             outputType = expression_result.type.outputType()
             if isinstance(outputType, NoneType):
@@ -248,7 +261,7 @@ class PredExpression(object):
                     return Error('La expression dentro de suc debe ser un Nat')
                 else:
                     if isinstance(expression_result.value, SuccExpression):
-                        return expression_result.value.expression
+                        return expression_result.value.expression.calculate()
                     else:
                         return Result(self, self.type, expression_result.dic)
 
@@ -314,7 +327,7 @@ class ExpressionAndExpression(object):
             newDic = dict()
             newDic.update(expression1_result.dic)
             newDic.update(expression2_result.dic)
-            return Result(self, expression1_result.type, newDic)
+            return Result(self, TypeAndType(expression2_result.type, expression1_result.type), newDic)
 
         if isinstance(expression2_result.type, NoneType):
             newDic = dict()
@@ -402,3 +415,6 @@ class NoneType(object):
 
     def value(self):
         return None
+
+    def outputType(self):
+        return self
