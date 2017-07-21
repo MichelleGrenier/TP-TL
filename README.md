@@ -15,6 +15,7 @@ Testeo
 * isZero :
 
 	-no chequea tipos
+	
 		iszero(false)   -------> iszero(false):Bool
 		iszero(\x:Bool.x)----> iszero(\x:Bool.x):Bool
 		iszero( (\x:Bool.x) true) -> iszero(true):Bool
