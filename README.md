@@ -8,8 +8,9 @@ Testeo
 	
 * Alguno de estos casos creeeo que deberian andar pero dan error de tipos...
 
-	(\x:Nat.succ(x))(\y:Nat.succ(y)) succ(0)
-	(\x:Nat.succ(x))( (\y:Nat.succ(y)) succ(0) )
+
+		(\x:Nat.succ(x))(\y:Nat.succ(y)) succ(0)
+		(\x:Nat.succ(x))( (\y:Nat.succ(y)) succ(0) )
 
 
 * isZero :
