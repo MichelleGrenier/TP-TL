@@ -45,13 +45,13 @@ Estas cosas son menos importantes
 * No aclaramos que expresion es la que espera un tipo distinto al pasado
 
 		if result.dic[self.variable].value() != self.type.value():
-			return Error( 'esperaba un valor de tipo ' + result.type.value())    
+			return Error( 'La expresion esperaba un valor de tipo ' + result.type.value())    
 		
 
 	podriamos hacer, por ejemplo:
 
 		if result.dic[self.variable].value() != self.type.value():
-			return Error( self.expression.toStringParaError() +'La expresion esperaba un valor de tipo ' + result.type.value())
+			return Error( self.expression.toStringParaError() +' esperaba un valor de tipo ' + result.type.value())
 
 
 	agregando la funcion, por ejemplo para succ:
