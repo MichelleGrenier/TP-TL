@@ -226,9 +226,12 @@ class PredExpression(object):
         if isinstance(outputType_expression, NoneType):
             # le asignamos Nat a la variable asociada a ese NoneType
             expression_result.dic[outputType_expression.variable] = NatType()
-        else:
-            # si la expresion no es de tipo Nat
-            if not isinstance(outputType_expression, NatType): return Error('pred espera un valor de tipo Nat')
+
+        # si la expresion es de tipo Bool
+        if isinstance(outputType_expression, BoolType): return Error('pred espera un valor de tipo Nat')
+
+        if isinstance(expression_result.value, ZeroExpression):
+            return Result(ZeroExpression('0'), self.type, expression_result.dic)
 
         #si la expression es de tipo succ cancelo el pred con el succ
         if isinstance(expression_result.value, SuccExpression): return Result(expression_result.value.expression, self.type, expression_result.dic)
@@ -253,10 +256,17 @@ class iszeroExpression(object):
         self.expression = expression_result.value
         if isinstance(expression_result, Error): return expression_result
 
-        if isinstance(expression_result.value, ZeroExpression):
-            return Result(BoolExpression('true'), self.type, expression_result.dic)
+        if isinstance(expression_result.type.outputType(), NoneType):
+            return Result(self, self.type, expression_result.dic)
 
-        return Result(self, self.type, expression_result.dic)
+        if isinstance(expression_result.type.outputType(), BoolType):
+            return Result(BoolExpression('false'), self.type, expression_result.dic)
+
+        if isinstance(expression_result.type.outputType(), NatType):
+            if isinstance(expression_result.value, ZeroExpression):
+                return Result(BoolExpression('true'), self.type, expression_result.dic)
+
+            return Result(BoolExpression('false'), self.type, expression_result.dic)
 
     def replace(self, variable, value):
         self.expression = self.expression.replace(variable, value)
@@ -264,6 +274,26 @@ class iszeroExpression(object):
 
     def toString(self):
         return 'iszero(' + self.expression.toString() + ')'
+
+class ExpressionWithParen(object):
+
+    def __init__(self, expression):
+        self.expression = expression
+
+    def calculate(self):
+        result = self.expression.calculate()
+        self.expression = result.value
+        if isinstance(result, Error):
+            return result
+
+        return Result(self, result.type, result.dic)
+
+    def toString(self):
+        return '(' + self.expression.toString() + ')'
+
+    def replace(self, variable, value):
+        self.expression = self.expression.replace(variable, value)
+        return self
 
 class ExpressionAndExpression(object):
 
@@ -273,7 +303,10 @@ class ExpressionAndExpression(object):
 
     def calculate(self):
         if isinstance(self.expression2, ExpressionAndExpression):
-            return ExpressionAndExpression(ExpressionAndExpression(self.expression1, self.expression2.expression1).calculate().value, self.expression2.expression2).calculate()
+            expression_result = ExpressionAndExpression(self.expression1, self.expression2.expression1).calculate()
+            if isinstance(expression_result, Error):
+                return expression_result
+            return ExpressionAndExpression(expression_result.value, self.expression2.expression2).calculate()
 
         expression1_result = self.expression1.calculate()
         self.expression1 = expression1_result.value
@@ -283,8 +316,8 @@ class ExpressionAndExpression(object):
         if isinstance(expression1_result, Error): return expression1_result
         if isinstance(expression2_result, Error): return expression2_result
 
-        # la parte de la izquiera tiene que ser una funciona lambda o una variable
-        # que en el futuro va a tomar una funcion lambda
+        # # la parte de la izquiera tiene que ser una funciona lambda o una variable
+        # # que en el futuro va a tomar una funcion lambda
         if isinstance(expression1_result.value, VariableExpression):
             # junto los diccionarios y contnuo ya que no tenemos mas informacion
             newDic = dict()
@@ -292,8 +325,11 @@ class ExpressionAndExpression(object):
             newDic.update(expression2_result.dic)
             return Result(self, expression2_result.type, newDic)
 
+        if isinstance(expression1_result.value, ExpressionWithParen):
+            return ExpressionAndExpression(expression1_result.value.expression, expression2_result.value).calculate()
+
         if not isinstance(expression1_result.value, LambdaExpression):
-            return Error('La primera expression no tiene como dominio al tipo de la segunda')
+            return Error('La parte izquierda de la aplicacion no es una funcion con dominio en ' + expression2_result.type.value())
 
         # el inputType de una lambda expression siempre lo conocemos
         inputType_expression1 = expression1_result.type.inputType()
@@ -303,7 +339,7 @@ class ExpressionAndExpression(object):
             expression2_result.dic[outputType_expression2.variable] = inputType_expression1
         else:
             if inputType_expression1.value() != outputType_expression2.value():
-                return Error("ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
+                return Error("La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
 
         return expression1_result.value.replaceVariable(expression2_result.value).calculate()
 

@@ -22,8 +22,8 @@ tokens = (
     'ISZERO',
     'BOOL',
     'NAT',
-    'ARROW',
-)
+    'ARROW'
+  )
 
 t_ignore = ' '
 t_VARIABLE = r'\w'
@@ -55,7 +55,6 @@ def t_IF(t):
 
 # Build the lexer
 lexer = lex.lex()
-
 
 def apply_lexer(string):
     """Aplica el lexer al string dado."""
