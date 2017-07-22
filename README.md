@@ -11,9 +11,9 @@ Gramatica
 		F -> expression4 F
 		F -> lambda
 
-		expression4 -> SUCC OPENPAREN expression5 CLOSEPAREN
-		expression4 -> PRED OPENPAREN expression5 CLOSEPAREN
-		expression4 -> ISZERO OPENPAREN expression5 CLOSEPAREN
+		expression4 -> SUCC OPENPAREN expression4 CLOSEPAREN
+		expression4 -> PRED OPENPAREN expression4 CLOSEPAREN
+		expression4 -> ISZERO OPENPAREN expression4 CLOSEPAREN
 		
 		expression4 -> expression5
 		expression4 -> OPENPAREN expression CLOSEPAREN
