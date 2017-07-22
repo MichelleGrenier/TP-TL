@@ -1,10 +1,10 @@
 Gramatica 
 ----------
 		
-		expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression
+		expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression2
 		expression -> expression2
 
-		expression2 -> IF expression THEN expression ELSE expression
+		expression2 -> IF expression3 THEN expression3 ELSE expression3
 		expression2 -> expression3
 
 		expression3 -> expression4 F
@@ -16,6 +16,7 @@ Gramatica
 		expression4 -> ISZERO OPENPAREN expression CLOSEPAREN
 
 		expression4 -> OPENPAREN expression CLOSEPAREN
+		expression4 -> expression
 		expression4 -> expression5
 
 		expression5 -> ZERO
