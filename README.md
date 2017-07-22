@@ -14,9 +14,9 @@ Gramatica
 		expression4 -> SUCC OPENPAREN expression5 CLOSEPAREN
 		expression4 -> PRED OPENPAREN expression5 CLOSEPAREN
 		expression4 -> ISZERO OPENPAREN expression5 CLOSEPAREN
-
-		expression4 -> OPENPAREN expression5 CLOSEPAREN
+		
 		expression4 -> expression5
+		expression4 -> OPENPAREN expression CLOSEPAREN
 		expression4 -> expression
 
 		expression5 -> ZERO
