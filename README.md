@@ -1,3 +1,25 @@
+Gramatica 
+----------
+			
+		E -> expression F
+		F -> expression F
+		F -> lambda
+		expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression
+		expression -> IF expression THEN expression ELSE expression
+		expression -> SUCC OPENPAREN expression CLOSEPAREN
+		expression -> PRED OPENPAREN expression CLOSEPAREN
+		expression -> ISZERO OPENPAREN expression CLOSEPAREN
+		expression -> OPENPAREN expression CLOSEPAREN
+		expression -> ZERO
+		expression -> VARIABLE
+		expression -> TRUE
+		expression -> FALSE
+		type -> BOOL T
+		type -> NAT T
+		T ->  ARROW type
+		T -> lambda
+
+
 Testeo
 --------
 
