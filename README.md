@@ -11,13 +11,13 @@ Gramatica
 		F -> expression4 F
 		F -> lambda
 
-		expression4 -> SUCC OPENPAREN expression CLOSEPAREN
-		expression4 -> PRED OPENPAREN expression CLOSEPAREN
-		expression4 -> ISZERO OPENPAREN expression CLOSEPAREN
+		expression4 -> SUCC OPENPAREN expression5 CLOSEPAREN
+		expression4 -> PRED OPENPAREN expression5 CLOSEPAREN
+		expression4 -> ISZERO OPENPAREN expression5 CLOSEPAREN
 
-		expression4 -> OPENPAREN expression CLOSEPAREN
-		expression4 -> expression
+		expression4 -> OPENPAREN expression5 CLOSEPAREN
 		expression4 -> expression5
+		expression4 -> expression
 
 		expression5 -> ZERO
 		expression5 -> VARIABLE
