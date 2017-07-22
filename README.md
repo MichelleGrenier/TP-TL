@@ -1,6 +1,36 @@
 Gramatica 
 ----------
+		
+		expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression
+		expression -> expression2
+
+		expression2 -> IF expression THEN expression ELSE expression
+		expression2 -> expression3
+
+		expression3 -> expression4 F
+		F -> expression4 F
+		F -> lambda
+
+		expression4 -> SUCC OPENPAREN expression CLOSEPAREN
+		expression4 -> PRED OPENPAREN expression CLOSEPAREN
+		expression4 -> ISZERO OPENPAREN expression CLOSEPAREN
+
+		expression4 -> OPENPAREN expression CLOSEPAREN
+		expression4 -> expression5
+
+		expression5 -> ZERO
+		expression5 -> VARIABLE
+		expression5 -> TRUE
+		expression5 -> FALSE
+
+		type -> BOOL T
+		type -> NAT T
+		T ->  ARROW type
+		T -> lambda
+		
 			
+----------------------------------------------------------------------
+
 		E -> expression F
 		F -> expression F
 		F -> lambda
