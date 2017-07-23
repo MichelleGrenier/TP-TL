@@ -29,13 +29,9 @@ Testeo 80:
 					
 * iszero:
 
-hay q ver que debe da esto, segun la rta de los profes, por ahora da false
-		
-			iszero(\x:Bool.x)  ---> OK: false:Bool
-			
-estos para mi deberia reducir igual q succ:
+en mi opinion deberian devolver la expresion sin reducir, no false
 
-	 - como reduce iszero:
+				iszero(\x:Bool.x)  ---> OK: false:Bool
 
 				iszero((\y:Nat.0)) ---> OK: false:Bool
 
@@ -43,14 +39,16 @@ estos para mi deberia reducir igual q succ:
 
 				iszero( (\x:Bool.if x then 0 else 0 ))  --->  OK: false:Bool
 
-	 - como reduce succ:
 
-				succ((\y:Nat.0))   ---> OK: succ((\y:Nat.0)):Nat
+esto no es inconsistente?  :
 
 				(\x:Nat->Nat.succ(x)  )  (\y:Nat.0) ---> ERROR: La expresion esperaba un valor de tipo Nat
 
-				succ( (\x:Bool.if x then 0 else 0 ) )---> OK: succ((\x:Bool.if x then 0 else 0)):Nat
+				succ(\y:Nat.0) ---> OK: succ(\y:Nat.0):Nat
 
+
+
+-----------------------
 
 * Asociatividad:
 
