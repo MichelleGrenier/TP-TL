@@ -86,7 +86,7 @@ def p_T_none(p):
     p[0] = None
 
 def p_error(p):
-    print("Hubo un error en el parseo.")
+    # print("Hubo un error en el parseo.")
     parser.restart()
 
 # Build the parser

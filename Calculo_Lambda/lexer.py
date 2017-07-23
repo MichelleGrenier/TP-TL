@@ -1,6 +1,7 @@
 #! coding: utf-8
 """Calculator lexer example."""
 import ply.lex as lex
+import sys
 
 LOCALE = False
 
@@ -44,7 +45,7 @@ t_NAT = r'Nat'
 t_ARROW = r'->'
 
 def t_ZERO(t):
-  r'\d'
+  r'[0-9]'
   t.value = int(t.value)
   return t
 
@@ -52,6 +53,15 @@ def t_IF(t):
   r'if'
   t.value = t.value
   return t
+#
+# def t_VARIABLE(t):
+#   r'[a-z]'
+#   t.value = t.value
+#   return t
+
+def t_error(t):
+    sys.stderr.write('Illegal character in input %s' % t.value[0] + '\n')
+    t.lexer.skip(1)
 
 # Build the lexer
 lexer = lex.lex()

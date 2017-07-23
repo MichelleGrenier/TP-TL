@@ -27,7 +27,7 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> expression","S'",1,None,None,None),
   ('expression -> LAMBDA VARIABLE TWOPOINTS type POINT expression','expression',6,'p_expression_lambda','parser.py',9),
-  ('expression -> expression2','expression',1,'p_expression_F','parser.py',13),
+  ('expression -> expression2','expression',1,'p_expression_expression2','parser.py',13),
   ('expression2 -> IF expression THEN expression ELSE expression','expression2',6,'p_expression2_if','parser.py',17),
   ('expression2 -> expression3','expression2',1,'p_expression2_expression3','parser.py',21),
   ('expression3 -> expression4 expression5','expression3',2,'p_expression3_expression4_expression5','parser.py',25),
