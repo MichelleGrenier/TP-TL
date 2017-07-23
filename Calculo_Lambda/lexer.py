@@ -1,5 +1,5 @@
 #! coding: utf-8
-"""Calculator lexer example."""
+
 import ply.lex as lex
 import sys
 
