@@ -53,11 +53,6 @@ def t_IF(t):
   r'if'
   t.value = t.value
   return t
-#
-# def t_VARIABLE(t):
-#   r'[a-z]'
-#   t.value = t.value
-#   return t
 
 def t_error(t):
     sys.stderr.write('Illegal character in input %s' % t.value[0] + '\n')

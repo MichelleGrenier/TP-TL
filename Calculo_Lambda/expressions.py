@@ -260,11 +260,14 @@ class iszeroExpression(object):
             return Result(self, self.type, expression_result.dic)
 
         if isinstance(expression_result.type.outputType(), BoolType):
-            return Result(BoolExpression('false'), self.type, expression_result.dic)
+            return Error('iszero espera un valor de tipo Nat')
 
         if isinstance(expression_result.type.outputType(), NatType):
             if isinstance(expression_result.value, ZeroExpression):
                 return Result(BoolExpression('true'), self.type, expression_result.dic)
+
+            if len(expression_result.dic):
+                return Result(self, self.type, expression_result.dic)
 
             return Result(BoolExpression('false'), self.type, expression_result.dic)
 
@@ -331,14 +334,10 @@ class ExpressionAndExpression(object):
         if not isinstance(expression1_result.value, LambdaExpression):
             return Error('La parte izquierda de la aplicacion no es una funcion con dominio en ' + expression2_result.type.value())
 
-        # el inputType de una lambda expression siempre lo conocemos
-        inputType_expression1 = expression1_result.type.inputType()
-        outputType_expression2 = expression2_result.type.inputType()
-
-        if isinstance(outputType_expression2, NoneType):
-            expression2_result.dic[outputType_expression2.variable] = inputType_expression1
+        if isinstance(expression2_result.type, NoneType):
+            expression2_result.dic[expression2_result.type.variable] = expression1_result.value.type
         else:
-            if inputType_expression1.value() != outputType_expression2.value():
+            if expression1_result.value.type.value() != expression2_result.type.value():
                 return Error("La parte izquierda de la aplicacion no es una funcion con dominio en " + expression2_result.type.value())
 
         return expression1_result.value.replaceVariable(expression2_result.value).calculate()
