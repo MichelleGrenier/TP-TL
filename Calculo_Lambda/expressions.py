@@ -83,7 +83,7 @@ class LambdaExpression(object):
             # se corresponda con lo que se declaro
             else:
                 # si los tipos son distintos entonces es un error
-                if result.dic[self.variable].value() != self.type.value():
+                if result.dic[self.variable].value() != self.type.outputType().value():
                     return Error('La expresion esperaba un valor de tipo ' + result.type.value())
             # si pasaron los chequeos de tipo entonces ya puedo eliminar del diccionario
             del result.dic[self.variable]
@@ -197,9 +197,10 @@ class SuccExpression(object):
         if isinstance(outputType_expression, NoneType):
             # le asignamos Nat a la variable asociada a ese NoneType
             expression_result.dic[outputType_expression.variable] = NatType()
-        else:
-            # si la expresion no es de tipo Nat
-            if not isinstance(outputType_expression, NatType): return Error('succ espera un valor de tipo Nat')
+
+        # si la expresion es de tipo Bool
+        if isinstance(outputType_expression, BoolType): return Error('succ espera un valor de tipo Nat')
+
         #si la expression es de tipo pred cancelo el suc con el pred
         if isinstance(expression_result.value, PredExpression):
             return Result(expression_result.value.expression, self.type, expression_result.dic)
@@ -269,10 +270,13 @@ class iszeroExpression(object):
             if isinstance(expression_result.value, ZeroExpression):
                 return Result(BoolExpression('true'), self.type, expression_result.dic)
 
-            if len(expression_result.dic):
-                return Result(self, self.type, expression_result.dic)
+            if isinstance(expression_result.value, ExpressionWithParen):
+                return iszeroExpression(expression_result.value.expression).calculate()
 
-            return Result(BoolExpression('false'), self.type, expression_result.dic)
+            if isinstance(expression_result.value, SuccExpression) or isinstance(expression_result.value, PredExpression):
+                return Result(BoolExpression('false'), self.type, expression_result.dic)
+
+            return Result(self, self.type, expression_result.dic)
 
     def replace(self, variable, value):
         self.expression = self.expression.replace(variable, value)
