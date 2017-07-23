@@ -158,6 +158,9 @@ class IfExpression(object):
             if not isinstance(outputType_condition, BoolType):
                 return Error('La condicion debe ser un boolean')
 
+            if isinstance(condition_result.value, ExpressionWithParen):
+                return IfExpression(condition_result.value.expression, true_condition_result.value, false_condition_result.value).calculate()
+
             # si la condicion es una BoolExpression entonces retorno el resultado adecuado
             if isinstance(condition_result.value, BoolExpression):
                 return true_condition_result if condition_result.value.value else false_condition_result
