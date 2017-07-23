@@ -1,3 +1,87 @@
+Testeo 2:
+----------
+
+* pincha
+
+		(\x.Nat.iszero(x)) ---> Hubo un error en el parseo.
+					Hubo un error en el parseo.
+					Traceback (most recent call last):
+					  File "C:\Users\Michelle\Documents\T Leng\TP-TL\main.py", line 11, in <module>
+					    result = parse(exp_str).calculate()
+					AttributeError: 'NoneType' object has no attribute 'calculate'
+					
+* iszero:
+
+Creo que esto deberia dar error cuando chequea tipos en vez de false:
+
+		iszero(false) ---> OK: false:Bool
+		iszero(\x:Bool.x) ---> OK: false:Bool
+
+esto no deberia reducir:
+
+		(\x:Nat.iszero(x))  (\y:Nat.pred(y)) 	----> OK: false:Bool
+		(\x:Nat.iszero(x))  (\y:Nat.y)		----> OK: false:Bool
+
+esto deberia ser true:
+
+		(\x:Nat.iszero(pred(x))) succ(0)	----> OK: false:Bool
+		
+
+* if:
+
+
+esto deberia reducir:
+
+		if( (\x:Nat.iszero(pred(x))) succ(0) ) then true else false ----> OK: if (false) then true else false:Bool		
+		if ( iszero(0)) then true else false			    ----> OK: if (true) then true else false:Bool
+		
+
+* Asociatividad:
+
+Se pueden agregar paréntesis para forzar a una asociatividad/precedencia determinada. Adicionalmente, puede ser que haya paréntesis de más, y esas expresiones deben ser soportadas (e.g., en (\x:T1.M1) ((\y:T2.M2) M), se aplica la función con la variable x al resultado de la aplicación de la función con la variable y a M, por lo que se cambia a precedencia y asociatividad de la abstracción)
+
+Aceptamos bien una cadena con presedencia y asociatividad a derecha forzada con parentesis:
+		
+		(\x:Nat.succ(x)) ((\y:Nat.pred(y)) succ(succ(0)) ) ----> OK: succ((succ(0))):Nat    
+		
+Una sin parentesis, deberia ser lo mismo que tener parentesis que fuercen asociatividad a izq:
+
+Sin parentesis:
+
+		(\x:Nat.x) (\y:Nat.succ(y))  succ(succ(0)) ----> OK: succ(succ(succ(0))):Nat
+Con:
+
+		((\x:Nat.x) (\y:Nat.succ(y)) ) succ(succ(0))----> OK: succ(succ(succ(0))):Nat
+
+
+Sin parentesis:
+
+		(\x:Nat.succ(x))  (\y:Nat.pred(y))  succ(succ(0)) ----> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
+Con:
+
+		( (\x:Nat.succ(x)) (\y:Nat.pred(y)) ) succ(succ(0))----> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat 
+
+Funcionan igual, debemos estar asociando bien !
+
+
+Me queda la duda de si estamos resolviendo bien la aplicacion, porque una cosa asi anda bien
+
+		 (\x:Nat.succ(x)) (\y:Nat.pred(y)) --> OK: succ((\y:Nat.pred(y))):Nat
+
+Pero no hay manera de asignarle un valor a Y para que reduzca
+		
+		succ((\y:Nat.pred(y))) 0 ---> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
+
+Entonces esto no reduce
+
+		(\x:Nat.iszero(x))  (\y:Nat.pred(y))  succ(succ(0))
+		
+ a menos que la primer lambda no aplique ninguna funcion
+ 		
+		(\x:Nat.x)  (\y:Nat.pred(y))  succ(succ(0)) ---> OK: succ(0):Nat
+
+
+
 Gramatica 
 ----------
 		
