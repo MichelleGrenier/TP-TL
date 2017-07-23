@@ -50,7 +50,7 @@ def t_ZERO(t):
   return t
 
 def t_IF(t):
-  r'if'
+  r'(?i)if'
   t.value = t.value
   return t
 
