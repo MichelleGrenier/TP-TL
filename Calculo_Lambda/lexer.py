@@ -1,5 +1,5 @@
 #! coding: utf-8
-"""Calculator lexer example."""
+
 import ply.lex as lex
 import sys
 
@@ -28,20 +28,20 @@ tokens = (
 
 t_ignore = ' '
 t_VARIABLE = r'\w'
-t_TRUE = r'true'
-t_FALSE = r'false'
-t_THEN = r'then'
-t_ELSE = r'else'
+t_TRUE = r'(?i)true'
+t_FALSE = r'(?i)false'
+t_THEN = r'(?i)then'
+t_ELSE = r'(?i)else'
 t_LAMBDA = r'\\'
 t_TWOPOINTS = r':'
 t_POINT = r'\.'
-t_SUCC = r'succ'
+t_SUCC = r'(?i)succ'
 t_OPENPAREN = r'\('
 t_CLOSEPAREN = r'\)'
-t_PRED = r'pred'
-t_ISZERO = r'iszero'
-t_BOOL = r'Bool'
-t_NAT = r'Nat'
+t_PRED = r'(?i)pred'
+t_ISZERO = r'(?i)iszero'
+t_BOOL = r'(?i)Bool'
+t_NAT = r'(?i)Nat'
 t_ARROW = r'->'
 
 def t_ZERO(t):
@@ -50,7 +50,7 @@ def t_ZERO(t):
   return t
 
 def t_IF(t):
-  r'if'
+  r'(?i)if'
   t.value = t.value
   return t
 

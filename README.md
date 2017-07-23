@@ -1,40 +1,54 @@
-Testeo 2:
+Testeo 3:
 ----------
 
-* pincha
 
-		(\x.Nat.iszero(x)) ---> Hubo un error en el parseo.
-					Hubo un error en el parseo.
-					Traceback (most recent call last):
-					  File "C:\Users\Michelle\Documents\T Leng\TP-TL\main.py", line 11, in <module>
-					    result = parse(exp_str).calculate()
-					AttributeError: 'NoneType' object has no attribute 'calculate'
+
+* este caso no reduce bien (solo pasa con iszero)
+
+		(\x:Nat.iszero(x))  ((\y:Nat.y) 0) --> OK: false:Bool
+		
+* otro ejemplo de lo mismo el iszero reduce mal
+
+		(\x:Nat.iszero(x))  ((\y:Nat.pred(y)) succ(0)) ---> OK: false:Bool
+
+	a pesar de que estos reducen bien:
+
+				((\y:Nat.pred(y)) succ(0)) ---> OK: (0):Nat
+
+				(\x:Nat.iszero(x)) pred(succ(0)) ---> OK: true:Bool
+		
+		
+* ¿esto no deberia reducir como si tuviera parentesis? 
+	
+		\y:Nat.y  0     --> OK: \y:Nat.y 0:Nat->Nat
+		(\y:Nat.y ) 0   --> OK: 0:Nat
+
+		\y:Nat.succ(y)  0 	-->  ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
+		(\y:Nat.succ(y) ) 0	-->  OK: succ(0):Nat
+		
 					
 * iszero:
 
-Creo que esto deberia dar error cuando chequea tipos en vez de false:
+en mi opinion deberian devolver la expresion sin reducir, no false
 
-		iszero(false) ---> OK: false:Bool
-		iszero(\x:Bool.x) ---> OK: false:Bool
+				iszero(\x:Bool.x)  ---> OK: false:Bool
 
-esto no deberia reducir:
+				iszero((\y:Nat.0)) ---> OK: false:Bool
 
-		(\x:Nat.iszero(x))  (\y:Nat.pred(y)) 	----> OK: false:Bool
-		(\x:Nat.iszero(x))  (\y:Nat.y)		----> OK: false:Bool
+				(\x:Nat->Nat.iszero(x))  (\y:Nat.0) ---> OK: false:Bool
 
-esto deberia ser true:
-
-		(\x:Nat.iszero(pred(x))) succ(0)	----> OK: false:Bool
-		
-
-* if:
+				iszero( (\x:Bool.if x then 0 else 0 ))  --->  OK: false:Bool
 
 
-esto deberia reducir:
+esto no es inconsistente?  :
 
-		if( (\x:Nat.iszero(pred(x))) succ(0) ) then true else false ----> OK: if (false) then true else false:Bool		
-		if ( iszero(0)) then true else false			    ----> OK: if (true) then true else false:Bool
-		
+				(\x:Nat->Nat.succ(x)  )  (\y:Nat.0) ---> ERROR: La expresion esperaba un valor de tipo Nat
+
+				succ(\y:Nat.0) ---> OK: succ(\y:Nat.0):Nat
+
+
+
+-----------------------
 
 * Asociatividad:
 
@@ -64,21 +78,6 @@ Con:
 Funcionan igual, debemos estar asociando bien !
 
 
-Me queda la duda de si estamos resolviendo bien la aplicacion, porque una cosa asi anda bien
-
-		 (\x:Nat.succ(x)) (\y:Nat.pred(y)) --> OK: succ((\y:Nat.pred(y))):Nat
-
-Pero no hay manera de asignarle un valor a Y para que reduzca
-		
-		succ((\y:Nat.pred(y))) 0 ---> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
-
-Entonces esto no reduce
-
-		(\x:Nat.iszero(x))  (\y:Nat.pred(y))  succ(succ(0))
-		
- a menos que la primer lambda no aplique ninguna funcion
- 		
-		(\x:Nat.x)  (\y:Nat.pred(y))  succ(succ(0)) ---> OK: succ(0):Nat
 
 
 
