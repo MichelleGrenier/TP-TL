@@ -1,40 +1,51 @@
-Testeo 2:
+Testeo 80:
 ----------
 
-* pincha
 
-		(\x.Nat.iszero(x)) ---> Hubo un error en el parseo.
-					Hubo un error en el parseo.
-					Traceback (most recent call last):
-					  File "C:\Users\Michelle\Documents\T Leng\TP-TL\main.py", line 11, in <module>
-					    result = parse(exp_str).calculate()
-					AttributeError: 'NoneType' object has no attribute 'calculate'
+
+* este caso no reduce bien (solo pasa con iszero)
+
+		(\x:Nat.iszero(x))  ((\y:Nat.y) 0) --> OK: false:Bool
+		
+* otro ejemplo de lo mismo el iszero reduce mal
+
+		(\x:Nat.iszero(x))  ((\y:Nat.pred(y)) succ(0)) ---> OK: false:Bool
+
+	a pesar de que estos reducen bien:
+
+				((\y:Nat.pred(y)) succ(0)) ---> OK: (0):Nat
+
+				(\x:Nat.iszero(x)) pred(succ(0)) ---> OK: true:Bool
+		
+		
+* ¿esto no deberia reducir como si tuviera parentesis? 
+	
+		\y:Nat.y  0     --> OK: \y:Nat.y 0:Nat->Nat
+		(\y:Nat.y ) 0   --> OK: 0:Nat
+
+		\y:Nat.succ(y)  0 	-->  ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
+		(\y:Nat.succ(y) ) 0	-->  OK: succ(0):Nat
+		
 					
 * iszero:
 
-Creo que esto deberia dar error cuando chequea tipos en vez de false:
-
-		iszero(false) ---> OK: false:Bool
-		iszero(\x:Bool.x) ---> OK: false:Bool
-
-esto no deberia reducir:
-
-		(\x:Nat.iszero(x))  (\y:Nat.pred(y)) 	----> OK: false:Bool
-		(\x:Nat.iszero(x))  (\y:Nat.y)		----> OK: false:Bool
-
-esto deberia ser true:
-
-		(\x:Nat.iszero(pred(x))) succ(0)	----> OK: false:Bool
+hay q ver que debe da esto, segun la rta de los profes, por ahora da false
 		
+			iszero(\x:Bool.x)  ---> OK: false:Bool
+			
+estos para mi deberia reducir igual q succ:
 
-* if:
+			iszero((\y:Nat.0)) ---> OK: false:Bool
+			
+			(\x:Nat->Nat.iszero(x))  (\y:Nat.0) ---> OK: false:Bool
 
 
-esto deberia reducir:
+			
+			succ((\y:Nat.0))   ---> OK: succ((\y:Nat.0)):Nat
+			
+			(\x:Nat->Nat.succ(x)  )  (\y:Nat.0) ---> ERROR: La expresion esperaba un valor de tipo Nat
 
-		if( (\x:Nat.iszero(pred(x))) succ(0) ) then true else false ----> OK: if (false) then true else false:Bool		
-		if ( iszero(0)) then true else false			    ----> OK: if (true) then true else false:Bool
-		
+
 
 * Asociatividad:
 
@@ -79,6 +90,8 @@ Entonces esto no reduce
  a menos que la primer lambda no aplique ninguna funcion
  		
 		(\x:Nat.x)  (\y:Nat.pred(y))  succ(succ(0)) ---> OK: succ(0):Nat
+
+
 
 
 
