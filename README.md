@@ -1,4 +1,4 @@
-Testeo 80:
+Testeo 3:
 ----------
 
 
@@ -76,23 +76,6 @@ Con:
 		( (\x:Nat.succ(x)) (\y:Nat.pred(y)) ) succ(succ(0))----> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat 
 
 Funcionan igual, debemos estar asociando bien !
-
-
-Me queda la duda de si estamos resolviendo bien la aplicacion, porque una cosa asi anda bien
-
-		 (\x:Nat.succ(x)) (\y:Nat.pred(y)) --> OK: succ((\y:Nat.pred(y))):Nat
-
-Pero no hay manera de asignarle un valor a Y para que reduzca
-		
-		succ((\y:Nat.pred(y))) 0 ---> ERROR: La parte izquierda de la aplicacion no es una funcion con dominio en Nat
-
-Entonces esto no reduce
-
-		(\x:Nat.iszero(x))  (\y:Nat.pred(y))  succ(succ(0))
-		
- a menos que la primer lambda no aplique ninguna funcion
- 		
-		(\x:Nat.x)  (\y:Nat.pred(y))  succ(succ(0)) ---> OK: succ(0):Nat
 
 
 
