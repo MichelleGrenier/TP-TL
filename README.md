@@ -35,13 +35,16 @@ hay q ver que debe da esto, segun la rta de los profes, por ahora da false
 			
 estos para mi deberia reducir igual q succ:
 
+ - como reduce iszero:
+
 			iszero((\y:Nat.0)) ---> OK: false:Bool
 			
 			(\x:Nat->Nat.iszero(x))  (\y:Nat.0) ---> OK: false:Bool
 
 			iszero( (\x:Bool.if x then 0 else 0 ))  --->  OK: false:Bool
 			
-			
+ - como reduce succ:
+
 			succ((\y:Nat.0))   ---> OK: succ((\y:Nat.0)):Nat
 			
 			(\x:Nat->Nat.succ(x)  )  (\y:Nat.0) ---> ERROR: La expresion esperaba un valor de tipo Nat
