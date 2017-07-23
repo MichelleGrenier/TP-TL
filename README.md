@@ -39,12 +39,14 @@ estos para mi deberia reducir igual q succ:
 			
 			(\x:Nat->Nat.iszero(x))  (\y:Nat.0) ---> OK: false:Bool
 
-
+			iszero( (\x:Bool.if x then 0 else 0 ))  --->  OK: false:Bool
+			
 			
 			succ((\y:Nat.0))   ---> OK: succ((\y:Nat.0)):Nat
 			
 			(\x:Nat->Nat.succ(x)  )  (\y:Nat.0) ---> ERROR: La expresion esperaba un valor de tipo Nat
-
+			
+			succ( (\x:Bool.if x then 0 else 0 ) )---> OK: succ((\x:Bool.if x then 0 else 0)):Nat
 
 
 * Asociatividad:
