@@ -83,22 +83,6 @@ class LambdaExpression(object):
             # se corresponda con lo que se declaro
             else:
                 # si los tipos son distintos entonces es un error
-                if isinstance(result.dic[self.variable], TypeAndType):
-                    if isinstance(self.type, TypeAndType):
-                        if isinstance(result.dic[self.variable].type1, NoneType):
-                            result.dic[self.variable].type1 = self.type.type1
-                        else:
-                            if result.dic[self.variable].type1.value() != self.type.type1.value():
-                                return Error('La expresion esperaba un valor de tipo ' + result.dic[self.variable].value())
-
-                        if isinstance(result.dic[self.variable].type2, NoneType):
-                            result.dic[self.variable].type2 = self.type.type2
-                        else:
-                            if result.dic[self.variable].type2.value() != self.type.type2.value():
-                                return Error('La expresion esperaba un valor de tipo ' + result.dic[self.variable].value())
-                    else:
-                        return Error('La expresion esperaba un valor de tipo type -> type')
-                # if result.dic[self.variable].value() != self.type.outputType().value():
                 if result.dic[self.variable].value() != self.type.outputType().value():
                     return Error('La expresion esperaba un valor de tipo ' + result.type.value())
             # si pasaron los chequeos de tipo entonces ya puedo eliminar del diccionario
@@ -346,7 +330,6 @@ class ExpressionAndExpression(object):
         # # que en el futuro va a tomar una funcion lambda
         if isinstance(expression1_result.value, VariableExpression):
             # junto los diccionarios y contnuo ya que no tenemos mas informacion
-            expression1_result.dic[expression1_result.value.variable] = TypeAndType(expression2_result.type.outputType(), NoneType(expression1_result.value.variable))
             newDic = dict()
             newDic.update(expression1_result.dic)
             newDic.update(expression2_result.dic)
